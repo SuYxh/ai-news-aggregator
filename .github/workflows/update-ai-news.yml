@@ -1,0 +1,56 @@
+name: Update AI News Snapshot
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "0 */2 * * *"
+
+permissions:
+  contents: write
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 9
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Prepare OPML (optional)
+        env:
+          FOLLOW_OPML_B64: ${{ secrets.FOLLOW_OPML_B64 }}
+        run: |
+          mkdir -p feeds
+          if [ -n "$FOLLOW_OPML_B64" ]; then
+            echo "$FOLLOW_OPML_B64" | base64 --decode > feeds/follow.opml
+            echo "Loaded feeds/follow.opml from FOLLOW_OPML_B64 secret"
+          else
+            echo "No FOLLOW_OPML_B64 secret provided; RSS OPML is optional"
+          fi
+
+      - name: Update data
+        run: pnpm fetch
+
+      - name: Commit and push changes
+        run: |
+          if git diff --quiet; then
+            echo "No changes to commit"
+            exit 0
+          fi
+          git config user.name "github-actions-bot"
+          git config user.email "41898282+github-actions-bot@users.noreply.github.com"
+          git add data/latest-24h.json data/archive.json data/source-status.json data/waytoagi-7d.json data/title-zh-cache.json
+          git commit -m "chore: update ai news snapshot"
+          git push

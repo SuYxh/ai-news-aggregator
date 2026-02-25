@@ -1,0 +1,34 @@
+feeds/*.opml
+!feeds/*.example.opml
+
+# Dependencies
+node_modules/
+
+dist/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+npm-debug.log*
+pnpm-debug.log*
+
+# Test coverage
+coverage/
+
+# Environment
+.env
+.env.local
+.env.*.local
+
+# Cache
+.eslintcache
+*.tsbuildinfo

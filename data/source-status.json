@@ -1,0 +1,185 @@
+{
+  "generated_at": "2026-02-25T08:50:21.216Z",
+  "sites": [
+    {
+      "site_id": "techurls",
+      "site_name": "TechURLs",
+      "ok": true,
+      "item_count": 405,
+      "duration_ms": 3177,
+      "error": null
+    },
+    {
+      "site_id": "buzzing",
+      "site_name": "Buzzing",
+      "ok": true,
+      "item_count": 744,
+      "duration_ms": 5014,
+      "error": null
+    },
+    {
+      "site_id": "iris",
+      "site_name": "Info Flow",
+      "ok": true,
+      "item_count": 457,
+      "duration_ms": 23161,
+      "error": null
+    },
+    {
+      "site_id": "bestblogs",
+      "site_name": "BestBlogs",
+      "ok": true,
+      "item_count": 83,
+      "duration_ms": 21316,
+      "error": null
+    },
+    {
+      "site_id": "tophub",
+      "site_name": "TopHub",
+      "ok": true,
+      "item_count": 3041,
+      "duration_ms": 2027,
+      "error": null
+    },
+    {
+      "site_id": "zeli",
+      "site_name": "Zeli",
+      "ok": true,
+      "item_count": 76,
+      "duration_ms": 2797,
+      "error": null
+    },
+    {
+      "site_id": "aihubtoday",
+      "site_name": "AI HubToday",
+      "ok": true,
+      "item_count": 47,
+      "duration_ms": 1916,
+      "error": null
+    },
+    {
+      "site_id": "aibase",
+      "site_name": "AIbase",
+      "ok": true,
+      "item_count": 20,
+      "duration_ms": 978,
+      "error": null
+    },
+    {
+      "site_id": "aihot",
+      "site_name": "AI今日热榜",
+      "ok": true,
+      "item_count": 494,
+      "duration_ms": 6998,
+      "error": null
+    },
+    {
+      "site_id": "newsnow",
+      "site_name": "NewsNow",
+      "ok": true,
+      "item_count": 1395,
+      "duration_ms": 4230,
+      "error": null
+    },
+    {
+      "site_id": "opmlrss",
+      "site_name": "OPML RSS",
+      "ok": true,
+      "item_count": 80,
+      "duration_ms": 36269,
+      "error": "2 feeds failed"
+    }
+  ],
+  "successful_sites": 11,
+  "failed_sites": [],
+  "zero_item_sites": [],
+  "fetched_raw_items": 6842,
+  "items_before_topic_filter": 6788,
+  "items_in_24h": 1266,
+  "rss_opml": {
+    "enabled": true,
+    "path": "/Users/bytedance/Desktop/ai-report/feeds/follow.opml",
+    "feed_total": 5,
+    "effective_feed_total": 5,
+    "ok_feeds": 3,
+    "failed_feeds": [
+      "https://www.qbitai.com/feed",
+      "http://feeds.feedburner.com/ruanyifeng"
+    ],
+    "zero_item_feeds": [],
+    "skipped_feeds": [],
+    "replaced_feeds": [],
+    "feeds": [
+      {
+        "site_id": "opmlrss:e31fb6cbaa",
+        "site_name": "OPML RSS",
+        "feed_title": "爱范儿",
+        "feed_url": "http://www.ifanr.com/feed",
+        "effective_feed_url": "http://www.ifanr.com/feed",
+        "ok": true,
+        "item_count": 20,
+        "duration_ms": 1314,
+        "error": null,
+        "skipped": false,
+        "skip_reason": null,
+        "replaced": false
+      },
+      {
+        "site_id": "opmlrss:d9ed8f749d",
+        "site_name": "OPML RSS",
+        "feed_title": "宝玉的分享",
+        "feed_url": "https://baoyu.io/feed.xml",
+        "effective_feed_url": "https://baoyu.io/feed.xml",
+        "ok": true,
+        "item_count": 50,
+        "duration_ms": 3655,
+        "error": null,
+        "skipped": false,
+        "skip_reason": null,
+        "replaced": false
+      },
+      {
+        "site_id": "opmlrss:5590904e33",
+        "site_name": "OPML RSS",
+        "feed_title": "量子位",
+        "feed_url": "https://www.qbitai.com/feed",
+        "effective_feed_url": "https://www.qbitai.com/feed",
+        "ok": false,
+        "item_count": 0,
+        "duration_ms": 919,
+        "error": "Status code 403",
+        "skipped": false,
+        "skip_reason": null,
+        "replaced": false
+      },
+      {
+        "site_id": "opmlrss:4ac8055656",
+        "site_name": "OPML RSS",
+        "feed_title": "美团技术团队",
+        "feed_url": "https://tech.meituan.com/feed/",
+        "effective_feed_url": "https://tech.meituan.com/feed/",
+        "ok": true,
+        "item_count": 10,
+        "duration_ms": 379,
+        "error": null,
+        "skipped": false,
+        "skip_reason": null,
+        "replaced": false
+      },
+      {
+        "site_id": "opmlrss:49dba73369",
+        "site_name": "OPML RSS",
+        "feed_title": "阮一峰的网络日志",
+        "feed_url": "http://feeds.feedburner.com/ruanyifeng",
+        "effective_feed_url": "http://feeds.feedburner.com/ruanyifeng",
+        "ok": false,
+        "item_count": 0,
+        "duration_ms": 30002,
+        "error": "Request timed out after 30000ms",
+        "skipped": false,
+        "skip_reason": null,
+        "replaced": false
+      }
+    ]
+  }
+}

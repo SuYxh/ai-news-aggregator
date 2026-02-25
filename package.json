@@ -1,0 +1,36 @@
+{
+  "name": "ai-news-aggregator",
+  "version": "1.0.0",
+  "description": "AI News Aggregator - Aggregate updates from multiple AI news sites",
+  "type": "module",
+  "main": "dist/index.js",
+  "scripts": {
+    "fetch": "tsx src/index.ts",
+    "fetch:dev": "tsx watch src/index.ts",
+    "fetch:opml": "tsx src/test-opml.ts",
+    "build": "tsc",
+    "lint": "eslint src --ext .ts",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "test:watch": "vitest"
+  },
+  "keywords": ["ai", "news", "aggregator", "rss"],
+  "license": "MIT",
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "dependencies": {
+    "cheerio": "^1.0.0",
+    "commander": "^12.1.0",
+    "dayjs": "^1.11.13",
+    "fast-xml-parser": "^4.5.0",
+    "p-limit": "^6.1.0",
+    "rss-parser": "^3.13.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.0",
+    "tsx": "^4.19.0",
+    "typescript": "^5.6.0",
+    "vitest": "^2.1.0"
+  }
+}

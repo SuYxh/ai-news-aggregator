@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<opml version="2.0">
+  <head>
+    <title>AI Signal Board RSS Example</title>
+  </head>
+  <body>
+    <outline text="RSS Example">
+      <outline
+        text="OpenAI News"
+        title="OpenAI News"
+        type="rss"
+        xmlUrl="https://openai.com/news/rss.xml"
+        htmlUrl="https://openai.com/news"
+      />
+      <outline
+        text="Hugging Face Blog"
+        title="Hugging Face Blog"
+        type="rss"
+        xmlUrl="https://huggingface.co/blog/feed.xml"
+        htmlUrl="https://huggingface.co/blog"
+      />
+      <outline
+        text="InfoQ CN"
+        title="InfoQ CN"
+        type="rss"
+        xmlUrl="https://www.infoq.cn/feed"
+        htmlUrl="https://www.infoq.cn/"
+      />
+    </outline>
+  </body>
+</opml>
