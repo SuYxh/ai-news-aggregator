@@ -23,11 +23,16 @@ export function Header({ theme, toggleTheme, onRefresh, loading, generatedAt, wi
             <div>
               <button 
                 onClick={onShowSources}
-                className="group flex items-center gap-1.5 hover:opacity-80 transition-opacity"
+                className="group flex items-center gap-2 hover:opacity-80 transition-opacity"
               >
                 <h1 className="text-xl font-bold text-slate-900 dark:text-white">
                   AI 资讯聚合
                 </h1>
+                {windowHours && (
+                  <span className="px-2 py-0.5 text-xs font-medium bg-gradient-to-r from-primary-500 to-primary-600 text-white rounded-full shadow-sm">
+                    近 {windowHours} 小时
+                  </span>
+                )}
                 <Info className="w-4 h-4 text-slate-400 opacity-0 group-hover:opacity-100 transition-opacity" />
               </button>
               <p className="text-xs text-slate-500 dark:text-slate-400">
@@ -40,7 +45,7 @@ export function Header({ theme, toggleTheme, onRefresh, loading, generatedAt, wi
             {generatedAt && (
               <div className="hidden sm:flex items-center gap-1.5 text-xs text-slate-500 dark:text-slate-400 bg-slate-100 dark:bg-slate-800 px-3 py-1.5 rounded-full">
                 <Clock className="w-3.5 h-3.5" />
-                <span>更新于 {formatDateTime(generatedAt)}</span>
+                <span>自动更新于 {formatDateTime(generatedAt)}</span>
                 {windowHours && (
                   <span className="text-slate-400 dark:text-slate-500">· {windowHours}h</span>
                 )}
