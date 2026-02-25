@@ -1,12 +1,15 @@
+import { useState } from 'react'
 import { Header } from './components/Header'
 import { StatsCards } from './components/StatsCards'
 import { FilterBar } from './components/FilterBar'
 import { NewsList } from './components/NewsList'
+import { SourceModal } from './components/SourceModal'
 import { useTheme } from './hooks/useTheme'
 import { useNewsData } from './hooks/useNewsData'
 
 function App() {
   const { theme, toggleTheme } = useTheme()
+  const [showSourceModal, setShowSourceModal] = useState(false)
   const {
     data,
     loading,
@@ -32,14 +35,18 @@ function App() {
         toggleTheme={toggleTheme} 
         onRefresh={refresh}
         loading={loading}
+        generatedAt={data?.generated_at}
+        windowHours={data?.window_hours}
+        onShowSources={() => setShowSourceModal(true)}
       />
       
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-6">
         <StatsCards
           totalItems={data?.total_items || 0}
           sourceCount={data?.source_count || 0}
-          generatedAt={data?.generated_at || null}
-          filteredCount={filteredItems.length}
+          windowHours={data?.window_hours || 24}
+          siteStats={siteStats}
+          onShowSources={() => setShowSourceModal(true)}
         />
         
         <FilterBar
@@ -69,6 +76,14 @@ function App() {
           </p>
         </div>
       </footer>
+
+      <SourceModal
+        isOpen={showSourceModal}
+        onClose={() => setShowSourceModal(false)}
+        siteStats={siteStats}
+        sourceCount={data?.source_count || 0}
+        windowHours={data?.window_hours || 24}
+      />
     </div>
   )
 }

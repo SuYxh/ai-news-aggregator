@@ -61,16 +61,20 @@ jobs:
             git push
           fi
 
+      - name: Generate OPML JSON
+        run: npx tsx src/generate-opml-json.ts
+
       - name: Build web
         env:
           GITHUB_PAGES: true
         run: |
           cd web
-          pnpm install --frozen-lockfile
+          pnpm install
           pnpm run build
           mkdir -p dist/data
           cp ../data/latest-24h.json dist/data/
           cp ../data/source-status.json dist/data/
+          cp ../data/opml-feeds.json dist/data/ 2>/dev/null || true
 
       - name: Setup Pages
         uses: actions/configure-pages@v4

@@ -1,0 +1,317 @@
+[
+  {
+    "name": "中文博客",
+    "feeds": [
+      {
+        "name": "量子位",
+        "url": "https://www.qbitai.com/feed"
+      },
+      {
+        "name": "宝玉的分享",
+        "url": "https://baoyu.io/feed.xml"
+      },
+      {
+        "name": "爱范儿",
+        "url": "http://www.ifanr.com/feed"
+      },
+      {
+        "name": "阮一峰的网络日志",
+        "url": "http://feeds.feedburner.com/ruanyifeng"
+      },
+      {
+        "name": "美团技术团队",
+        "url": "https://tech.meituan.com/feed/"
+      },
+      {
+        "name": "SuperTechFans",
+        "url": "https://www.supertechfans.com/cn/index.xml"
+      }
+    ]
+  },
+  {
+    "name": "中文聚合",
+    "feeds": [
+      {
+        "name": "掘金本周最热",
+        "url": "https://rsshub.bestblogs.dev/juejin/trending/all/weekly"
+      }
+    ]
+  },
+  {
+    "name": "中文Twitter博主",
+    "feeds": [
+      {
+        "name": "李继刚(@lijigang_com)",
+        "url": "https://api.xgo.ing/rss/user/ca2fa444b6ea4b8b974fe148056e497a"
+      },
+      {
+        "name": "宝玉(@dotey)",
+        "url": "https://api.xgo.ing/rss/user/97f1484ae48c430fbbf3438099743674"
+      },
+      {
+        "name": "歸藏(guizang.ai)(@op7418)",
+        "url": "https://api.xgo.ing/rss/user/831fac36aa0a49a9af79f35dc1c9b5d9"
+      },
+      {
+        "name": "小互(@imxiaohu)",
+        "url": "https://api.xgo.ing/rss/user/74e542992cf7441390c708f5601071d4"
+      },
+      {
+        "name": "向阳乔木(@vista8)",
+        "url": "https://api.xgo.ing/rss/user/9de19c78f7454ad08c956c1a00d237fe"
+      },
+      {
+        "name": "AI产品黄叔(@PMbackttfuture)",
+        "url": "https://api.xgo.ing/rss/user/5b632b7fba274f62928cdcc9d3db4c5e"
+      },
+      {
+        "name": "idoubi(@idoubicc)",
+        "url": "https://api.xgo.ing/rss/user/3d72acd51d21414ea39871fc01982a65"
+      },
+      {
+        "name": "Viking(@vikingmute)",
+        "url": "https://api.xgo.ing/rss/user/aab44cb2665a49258cd81f63b0b55192"
+      },
+      {
+        "name": "Geek(@geekbb)",
+        "url": "https://api.xgo.ing/rss/user/9cb3b60e689e4445a7fbdfd0be144126"
+      },
+      {
+        "name": "Tw93(@HiTw93)",
+        "url": "https://api.xgo.ing/rss/user/665fc88440fd4436acbc2e630d824926"
+      },
+      {
+        "name": "Yangyi(@Yangyixxxx)",
+        "url": "https://api.xgo.ing/rss/user/66c40de71a9842fda4853b7d9d1d20da"
+      },
+      {
+        "name": "hidecloud(@hidecloud)",
+        "url": "https://api.xgo.ing/rss/user/23d41992b29340788aa3d09d8364c5f5"
+      },
+      {
+        "name": "cat(@_catwu)",
+        "url": "https://api.xgo.ing/rss/user/66a6b39ddcfa42e39621e0ab293c1bdd"
+      },
+      {
+        "name": "meng shao(@shao__meng)",
+        "url": "https://api.xgo.ing/rss/user/48aae530e0bf413aa7d44380f418e2e3"
+      },
+      {
+        "name": "Eric Jing(@ericjing_ai)",
+        "url": "https://api.xgo.ing/rss/user/ddfdcdd4e390495c942f0b5da62af0fb"
+      }
+    ]
+  },
+  {
+    "name": "中国AI公司",
+    "feeds": [
+      {
+        "name": "Qwen(@Alibaba_Qwen)",
+        "url": "https://api.xgo.ing/rss/user/80032d016d654eb4afe741ff34b7643d"
+      },
+      {
+        "name": "DeepSeek(@deepseek_ai)",
+        "url": "https://api.xgo.ing/rss/user/68b610deb24b47ae9a236811563cda86"
+      },
+      {
+        "name": "Hunyuan(@TXhunyuan)",
+        "url": "https://api.xgo.ing/rss/user/6e8e7b42cb434818810f87bcf77d86fb"
+      },
+      {
+        "name": "Skywork(@Skywork_ai)",
+        "url": "https://api.xgo.ing/rss/user/6d7d398dd80b48d79669c92745d32cf6"
+      },
+      {
+        "name": "Kling AI(@Kling_ai)",
+        "url": "https://api.xgo.ing/rss/user/564237c3de274d58a04f064920817888"
+      },
+      {
+        "name": "Hailuo AI (MiniMax)(@Hailuo_AI)",
+        "url": "https://api.xgo.ing/rss/user/e65b5e59fcb544918c1ba17f5758f0f8"
+      },
+      {
+        "name": "Fish Audio(@FishAudio)",
+        "url": "https://api.xgo.ing/rss/user/4900b3dcd592424687582ff9e0f148ea"
+      },
+      {
+        "name": "Monica_IM(@hey_im_monica)",
+        "url": "https://api.xgo.ing/rss/user/5d749cc613ec4069bb2a47334739e1b6"
+      },
+      {
+        "name": "Dify(@dify_ai)",
+        "url": "https://api.xgo.ing/rss/user/0be252fedbe84ad7bea21be44b18da89"
+      },
+      {
+        "name": "Jina AI(@JinaAI_)",
+        "url": "https://api.xgo.ing/rss/user/f510f6e7eecf456ca7e2895a46752888"
+      },
+      {
+        "name": "Milvus(@milvusio)",
+        "url": "https://api.xgo.ing/rss/user/424e67b19eed4500b7a440976bbd2ade"
+      }
+    ]
+  },
+  {
+    "name": "华人AI研究者",
+    "feeds": [
+      {
+        "name": "Fei-Fei Li(@drfeifei)",
+        "url": "https://api.xgo.ing/rss/user/a4bfe44bfc0d4c949da21ebd3f5f42a5"
+      },
+      {
+        "name": "Junyang Lin(@JustinLin610)",
+        "url": "https://api.xgo.ing/rss/user/082097117b4543e9a741cd2580f936d3"
+      },
+      {
+        "name": "Binyuan Hui(@huybery)",
+        "url": "https://api.xgo.ing/rss/user/f54b2b40185943ce8f48a880110b7bc2"
+      },
+      {
+        "name": "Jim Fan(@DrJimFan)",
+        "url": "https://api.xgo.ing/rss/user/c6cfe7c0d6b74849997073233fdea840"
+      },
+      {
+        "name": "Jerry Liu(@jerryjliu0)",
+        "url": "https://api.xgo.ing/rss/user/b3d904c0d7c446558ef3a1e7f2eb362b"
+      },
+      {
+        "name": "Lilian Weng(@lilianweng)",
+        "url": "https://api.xgo.ing/rss/user/a8f7e2238039461cbc8bf55f5f194498"
+      },
+      {
+        "name": "Andrew Ng(@AndrewYNg)",
+        "url": "https://api.xgo.ing/rss/user/08b5488b20bc437c8bfc317a52e5c26d"
+      },
+      {
+        "name": "Hung-yi Lee",
+        "url": "https://www.youtube.com/feeds/videos.xml?channel_id=UC2ggjtuuWvxrHHHiaDH1dlQ"
+      }
+    ]
+  },
+  {
+    "name": "AI Companies",
+    "feeds": [
+      {
+        "name": "OpenAI(@OpenAI)",
+        "url": "https://api.xgo.ing/rss/user/0c0856a69f9f49cf961018c32a0b0049"
+      },
+      {
+        "name": "OpenAI Developers(@OpenAIDevs)",
+        "url": "https://api.xgo.ing/rss/user/971dc1fc90da449bac23e5fad8a33d55"
+      },
+      {
+        "name": "ChatGPT(@ChatGPTapp)",
+        "url": "https://api.xgo.ing/rss/user/f7992687b8d74b14bf2341eb3a0a5ec4"
+      },
+      {
+        "name": "Anthropic(@AnthropicAI)",
+        "url": "https://api.xgo.ing/rss/user/fc28a211471b496682feff329ec616e5"
+      },
+      {
+        "name": "Claude(@claudeai)",
+        "url": "https://api.xgo.ing/rss/user/01f60d63a61b44d692cc35c7feb0b4a4"
+      },
+      {
+        "name": "Google AI(@GoogleAI)",
+        "url": "https://api.xgo.ing/rss/user/4de0bd2d5cef4333a0260dc8157054a7"
+      },
+      {
+        "name": "Google DeepMind(@GoogleDeepMind)",
+        "url": "https://api.xgo.ing/rss/user/a99538443a484fcc846bdcc8f50745ec"
+      },
+      {
+        "name": "Google Gemini App(@GeminiApp)",
+        "url": "https://api.xgo.ing/rss/user/6fb337feeec44ca38b79491b971d868d"
+      },
+      {
+        "name": "xAI(@xai)",
+        "url": "https://api.xgo.ing/rss/user/3953aa71e87a422eb9d7bf6ff1c7c43e"
+      },
+      {
+        "name": "Hugging Face(@huggingface)",
+        "url": "https://api.xgo.ing/rss/user/fc16750ce50741f1b1f05ea1fb29436f"
+      },
+      {
+        "name": "NVIDIA AI(@NVIDIAAI)",
+        "url": "https://api.xgo.ing/rss/user/05f1492e43514dc3862a076d3697c390"
+      },
+      {
+        "name": "AI at Meta(@AIatMeta)",
+        "url": "https://api.xgo.ing/rss/user/ef7c70f9568d45f4915169fef4ce90b4"
+      },
+      {
+        "name": "Microsoft Research(@MSFTResearch)",
+        "url": "https://api.xgo.ing/rss/user/61f4b78554fb4b8fa5653ec5d924d15a"
+      },
+      {
+        "name": "Groq Inc(@GroqInc)",
+        "url": "https://api.xgo.ing/rss/user/771b32075fe54a83bdb6966de9647b4f"
+      },
+      {
+        "name": "Cursor(@cursor_ai)",
+        "url": "https://api.xgo.ing/rss/user/5287b4e0e13a4ab7ab7b1d56f9d88960"
+      },
+      {
+        "name": "Windsurf(@windsurf_ai)",
+        "url": "https://api.xgo.ing/rss/user/4a8273800ed34a069eecdb6c5c1b9ccf"
+      },
+      {
+        "name": "bolt.new(@boltdotnew)",
+        "url": "https://api.xgo.ing/rss/user/760ab7cd9708452c9ce1f9144b92a430"
+      }
+    ]
+  },
+  {
+    "name": "Dev Tools",
+    "feeds": [
+      {
+        "name": "LangChain(@LangChainAI)",
+        "url": "https://api.xgo.ing/rss/user/862fee50a745423c87e2633b274caf1d"
+      },
+      {
+        "name": "LlamaIndex(@llama_index)",
+        "url": "https://api.xgo.ing/rss/user/67e259bd5be544ce84bbc867eace54c2"
+      },
+      {
+        "name": "ollama(@ollama)",
+        "url": "https://api.xgo.ing/rss/user/6326c63a2dfa445bbde88bea0c3112c2"
+      },
+      {
+        "name": "Firecrawl(@firecrawl_dev)",
+        "url": "https://api.xgo.ing/rss/user/c04abb206bbf4f91b22795024d6c0614"
+      },
+      {
+        "name": "Browser Use(@browser_use)",
+        "url": "https://api.xgo.ing/rss/user/b8d7530f0b294405825013bbc1cc198f"
+      },
+      {
+        "name": "OpenRouter(@OpenRouterAI)",
+        "url": "https://api.xgo.ing/rss/user/e503a90c035c4b1d8f8dd34907d15bf4"
+      },
+      {
+        "name": "AI SDK(@aisdk)",
+        "url": "https://api.xgo.ing/rss/user/22af005b21ec45b1a4503acca777b7f0"
+      },
+      {
+        "name": "DeepLearning.AI(@DeepLearningAI)",
+        "url": "https://api.xgo.ing/rss/user/42e6b4901b97498eab2ab64c07d56177"
+      },
+      {
+        "name": "GitHub(@github)",
+        "url": "https://api.xgo.ing/rss/user/fa5b15f68a2e4df1ab301e26a4ab9190"
+      },
+      {
+        "name": "Figma(@figma)",
+        "url": "https://api.xgo.ing/rss/user/f8a106a09a7d404fb8de7eb0c5ddd2a2"
+      },
+      {
+        "name": "Notion(@NotionHQ)",
+        "url": "https://api.xgo.ing/rss/user/f97a26863aec4425b021720d4f8e4ede"
+      },
+      {
+        "name": "NotebookLM(@NotebookLM)",
+        "url": "https://api.xgo.ing/rss/user/221a88341acb475db221a12fed8208d0"
+      }
+    ]
+  }
+]

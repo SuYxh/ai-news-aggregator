@@ -14,7 +14,12 @@
     "test": "vitest run",
     "test:watch": "vitest"
   },
-  "keywords": ["ai", "news", "aggregator", "rss"],
+  "keywords": [
+    "ai",
+    "news",
+    "aggregator",
+    "rss"
+  ],
   "license": "MIT",
   "engines": {
     "node": ">=18.0.0"
@@ -25,7 +30,8 @@
     "dayjs": "^1.11.13",
     "fast-xml-parser": "^4.5.0",
     "p-limit": "^6.1.0",
-    "rss-parser": "^3.13.0"
+    "rss-parser": "^3.13.0",
+    "xml2js": "^0.6.2"
   },
   "devDependencies": {
     "@types/node": "^22.10.0",

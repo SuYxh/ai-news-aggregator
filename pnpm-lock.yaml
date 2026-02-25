@@ -11,6 +11,7 @@ specifiers:
   tsx: ^4.19.0
   typescript: ^5.6.0
   vitest: ^2.1.0
+  xml2js: ^0.6.2
 
 dependencies:
   cheerio: 1.2.0
@@ -19,6 +20,7 @@ dependencies:
   fast-xml-parser: 4.5.3
   p-limit: 6.2.0
   rss-parser: 3.13.0
+  xml2js: 0.6.2
 
 devDependencies:
   '@types/node': 22.19.11
@@ -1368,6 +1370,14 @@ packages:
 
   /xml2js/0.5.0:
     resolution: {integrity: sha512-drPFnkQJik/O+uPKpqSgr22mpuFHqKdbS835iAQrUC73L2F5WkboIRd63ai/2Yg6I1jzifPFKH2NTK+cfglkIA==}
+    engines: {node: '>=4.0.0'}
+    dependencies:
+      sax: 1.4.4
+      xmlbuilder: 11.0.1
+    dev: false
+
+  /xml2js/0.6.2:
+    resolution: {integrity: sha512-T4rieHaC1EXcES0Kxxj4JWgaUQHDk+qwHcYOCFHfiwKz7tOVPLq7Hjq9dM1WCMhylqMEfP7hMcOIChvotiZegA==}
     engines: {node: '>=4.0.0'}
     dependencies:
       sax: 1.4.4

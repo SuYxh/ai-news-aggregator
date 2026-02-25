@@ -32,7 +32,7 @@ export function useNewsData(): UseNewsDataReturn {
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
   const [searchQuery, setSearchQuery] = useState('')
-  const [selectedSite, setSelectedSite] = useState('all')
+  const [selectedSite, setSelectedSite] = useState('opmlrss')
   const [selectedSource, setSelectedSource] = useState('all')
   const [displayCount, setDisplayCount] = useState(PAGE_SIZE)
 
