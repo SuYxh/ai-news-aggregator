@@ -201,10 +201,8 @@ async function main(): Promise<number> {
       existing.source = raw.source;
       existing.title = title;
       existing.url = url;
-      if (raw.publishedAt) {
-        if (raw.siteId === 'opmlrss' || !existing.published_at) {
-          existing.published_at = toISOString(raw.publishedAt);
-        }
+      if (raw.publishedAt && !existing.published_at) {
+        existing.published_at = toISOString(raw.publishedAt);
       }
       existing.last_seen_at = toISOString(now)!;
     }

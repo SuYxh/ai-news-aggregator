@@ -7,6 +7,12 @@ on:
 
 permissions:
   contents: write
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
 
 jobs:
   update:
@@ -23,7 +29,7 @@ jobs:
       - name: Setup pnpm
         uses: pnpm/action-setup@v4
         with:
-          version: 7
+          version: 9
 
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
@@ -47,10 +53,40 @@ jobs:
         run: |
           if git diff --quiet; then
             echo "No changes to commit"
-            exit 0
+          else
+            git config user.name "github-actions-bot"
+            git config user.email "41898282+github-actions-bot@users.noreply.github.com"
+            git add data/latest-24h.json data/archive.json data/source-status.json data/waytoagi-7d.json data/title-zh-cache.json
+            git commit -m "chore: update ai news snapshot"
+            git push
           fi
-          git config user.name "github-actions-bot"
-          git config user.email "41898282+github-actions-bot@users.noreply.github.com"
-          git add data/latest-24h.json data/archive.json data/source-status.json data/waytoagi-7d.json data/title-zh-cache.json
-          git commit -m "chore: update ai news snapshot"
-          git push
+
+      - name: Build web
+        env:
+          GITHUB_PAGES: true
+        run: |
+          cd web
+          pnpm install --frozen-lockfile
+          pnpm run build
+          mkdir -p dist/data
+          cp ../data/latest-24h.json dist/data/
+          cp ../data/source-status.json dist/data/
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v4
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: ./web/dist
+
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    needs: update
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

@@ -78,7 +78,7 @@ export function parseRelativeTimeZh(text: string, now: Date): Date | null {
     return yesterday;
   }
 
-  match = s.match(/(?:今天)?\s*(\d{1,2}):(\d{2})/);
+  match = s.match(/^(?:今天)?\s*(\d{1,2}):(\d{2})$/);
   if (match) {
     const candidate = new Date(now);
     candidate.setHours(parseInt(match[1]), parseInt(match[2]), 0, 0);
