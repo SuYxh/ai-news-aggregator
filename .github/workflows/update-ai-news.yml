@@ -41,7 +41,7 @@ jobs:
           fi
 
       - name: Update data
-        run: pnpm fetch
+        run: pnpm run fetch
 
       - name: Commit and push changes
         run: |
