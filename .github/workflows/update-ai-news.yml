@@ -56,7 +56,7 @@ jobs:
           else
             git config user.name "github-actions-bot"
             git config user.email "41898282+github-actions-bot@users.noreply.github.com"
-            git add data/latest-24h.json data/archive.json data/source-status.json data/waytoagi-7d.json data/title-zh-cache.json
+            git add data/latest-24h.json data/latest-7d.json data/archive.json data/source-status.json data/waytoagi-7d.json data/title-zh-cache.json
             git commit -m "chore: update ai news snapshot"
             git push
           fi
@@ -73,6 +73,7 @@ jobs:
           pnpm run build
           mkdir -p dist/data
           cp ../data/latest-24h.json dist/data/
+          cp ../data/latest-7d.json dist/data/
           cp ../data/source-status.json dist/data/
           cp ../data/opml-feeds.json dist/data/ 2>/dev/null || true
 
