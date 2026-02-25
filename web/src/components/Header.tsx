@@ -1,4 +1,4 @@
-import { Sun, Moon, Bot, RefreshCw, Clock, Info } from 'lucide-react'
+import { Sun, Moon, Bot, Clock, Info, Github } from 'lucide-react'
 import { formatDateTime } from '../utils/formatDate'
 import type { TimeRange } from '../hooks/useNewsData'
 
@@ -87,14 +87,15 @@ export function Header({
                 )}
               </div>
             )}
-            <button
-              onClick={onRefresh}
-              disabled={loading}
+            <a
+              href="https://github.com/SuYxh/ai-news-aggregator"
+              target="_blank"
+              rel="noopener noreferrer"
               className="btn btn-ghost p-2 rounded-lg"
-              title="刷新数据"
+              title="GitHub"
             >
-              <RefreshCw className={`w-5 h-5 ${loading ? 'animate-spin' : ''}`} />
-            </button>
+              <Github className="w-5 h-5" />
+            </a>
             <button
               onClick={toggleTheme}
               className="btn btn-ghost p-2 rounded-lg"
