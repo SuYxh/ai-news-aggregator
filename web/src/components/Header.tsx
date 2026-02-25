@@ -16,9 +16,7 @@ interface HeaderProps {
 
 export function Header({ 
   theme, 
-  toggleTheme, 
-  onRefresh, 
-  loading, 
+  toggleTheme,
   generatedAt, 
   windowHours, 
   onShowSources,
