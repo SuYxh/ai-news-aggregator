@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Header } from './components/Header'
 import { StatsCards } from './components/StatsCards'
 import { FilterBar } from './components/FilterBar'
@@ -10,6 +10,13 @@ import { useNewsData } from './hooks/useNewsData'
 function App() {
   const { theme, toggleTheme } = useTheme()
   const [showSourceModal, setShowSourceModal] = useState(false)
+
+  useEffect(() => {
+    fetch('https://functions-kv-c4f0gfcx.edgeone.dev/visit').catch(() => {
+      console.error('Failed to record visit')
+    })
+  }, [])
+
   const {
     data,
     loading,
