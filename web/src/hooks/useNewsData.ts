@@ -1,10 +1,12 @@
-import { useState, useEffect, useMemo } from 'react'
+import { useState, useEffect, useMemo, useCallback } from 'react'
 import type { NewsData, NewsItem, SiteStat } from '../types'
 
 export interface SourceStat {
   source: string
   count: number
 }
+
+export type TimeRange = '24h' | '7d'
 
 interface UseNewsDataReturn {
   data: NewsData | null
@@ -23,6 +25,8 @@ interface UseNewsDataReturn {
   hasMore: boolean
   displayCount: number
   refresh: () => void
+  timeRange: TimeRange
+  setTimeRange: (range: TimeRange) => void
 }
 
 const PAGE_SIZE = 50
@@ -35,13 +39,15 @@ export function useNewsData(): UseNewsDataReturn {
   const [selectedSite, setSelectedSite] = useState('opmlrss')
   const [selectedSource, setSelectedSource] = useState('all')
   const [displayCount, setDisplayCount] = useState(PAGE_SIZE)
+  const [timeRange, setTimeRange] = useState<TimeRange>('24h')
 
-  const fetchData = async () => {
+  const fetchData = useCallback(async (range: TimeRange) => {
     setLoading(true)
     setError(null)
     try {
       const basePath = import.meta.env.BASE_URL || '/'
-      const response = await fetch(`${basePath}data/latest-24h.json`)
+      const fileName = range === '24h' ? 'latest-24h.json' : 'latest-7d.json'
+      const response = await fetch(`${basePath}data/${fileName}`)
       if (!response.ok) {
         throw new Error('数据加载失败')
       }
@@ -52,10 +58,18 @@ export function useNewsData(): UseNewsDataReturn {
     } finally {
       setLoading(false)
     }
-  }
+  }, [])
 
   useEffect(() => {
-    fetchData()
+    fetchData(timeRange)
+  }, [timeRange, fetchData])
+
+  const handleTimeRangeChange = useCallback((range: TimeRange) => {
+    setTimeRange(range)
+    setDisplayCount(PAGE_SIZE)
+    setSelectedSite('opmlrss')
+    setSelectedSource('all')
+    setSearchQuery('')
   }, [])
 
   const sourceStats = useMemo(() => {
@@ -131,7 +145,7 @@ export function useNewsData(): UseNewsDataReturn {
 
   const refresh = () => {
     setDisplayCount(PAGE_SIZE)
-    fetchData()
+    fetchData(timeRange)
   }
 
   useEffect(() => {
@@ -158,6 +172,8 @@ export function useNewsData(): UseNewsDataReturn {
     loadMore,
     hasMore,
     displayCount,
-    refresh
+    refresh,
+    timeRange,
+    setTimeRange: handleTimeRangeChange
   }
 }

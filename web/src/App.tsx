@@ -26,6 +26,8 @@ function App() {
     loadMore,
     hasMore,
     refresh,
+    timeRange,
+    setTimeRange,
   } = useNewsData()
 
   return (
@@ -38,6 +40,8 @@ function App() {
         generatedAt={data?.generated_at}
         windowHours={data?.window_hours}
         onShowSources={() => setShowSourceModal(true)}
+        timeRange={timeRange}
+        onTimeRangeChange={setTimeRange}
       />
       
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-6">
