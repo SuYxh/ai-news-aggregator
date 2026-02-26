@@ -646,5 +646,20 @@
   "ECS Survivors Parts VII – X": "ECS 幸存者第 VII – X 部分",
   "RK3588 and RK3576 video decoders support merged in the upstream Linux Kernel": "RK3588和RK3576视频解码器支持合并到上游Linux内核",
   "PA bench: Evaluating web agents on real world personal assistant workflows": "PA 工作台：根据现实世界的个人助理工作流程评估网络代理",
-  "Google API keys weren't secrets, but then Gemini changed the rules": "Google API 密钥不是秘密，但后来 Gemini 改变了规则"
+  "Google API keys weren't secrets, but then Gemini changed the rules": "Google API 密钥不是秘密，但后来 Gemini 改变了规则",
+  "Uber Employees Have Built an AI Clone of Their CEO To Practice Presentations Before the Real Thing": "Uber 员工建立了首席执行官的人工智能克隆，以便在真正的演示之前练习演示",
+  "Q&A with Skild AI CEO Deepak Pathak on building a general-purpose brain for robots, standing out among big tech's robotics efforts, the path to AGI, and more (Alex Heath/Sources)": "Skild AI 首席执行官 Deepak Pathak 的问答，内容涉及为机器人构建通用大脑、在大型科技公司的机器人技术中脱颖而出、通向 AGI 之路等（Alex Heath/Sources）",
+  "Tech companies are increasingly turning to GPU-backed debt, a model pioneered by CoreWeave, using SPVs to shift debt off their balance sheets (Michelle Chan/Financial Times)": "科技公司越来越多地转向 GPU 支持的债务，这是 CoreWeave 首创的一种模式，利用 SPV 将债务从资产负债表上转移出去（Michelle Chan/金融时报）",
+  "Sources: Amazon plans to invest up to $50B in OpenAI, $35B of which could hinge on an IPO or AGI milestone; OpenAI is discussing custom models for Amazon (The Information)": "资料来源：亚马逊计划向 OpenAI 投资最多 50B 美元，其中 35B 美元可能取决于 IPO 或 AGI 里程碑； OpenAI 正在讨论亚马逊的定制模型（信息）",
+  "A Cloudflare engineer rebuilt Next.js from scratch in one week using AI, reimplementing 94% of its API and spending $1,100 on Claude tokens (Tim Anderson/The Register)": "一位 Cloudflare 工程师使用 AI 在一周内从头开始重建了 Next.js，重新实现了 94% 的 API，并花费 1,100 美元购买了 Claude 代币（Tim Anderson/The Register）",
+  "A.I. Dating Apps Complicate China’s Efforts to Boost Birthrate": "人工智能。约会应用程序使中国提高出生率的努力变得更加复杂",
+  "Deleting Database and Emails: a Fatal Flaw of AI Agents Leads to Risks in Human–AI Collaboration": "删除数据库和电子邮件：人工智能代理的致命缺陷导致人类与人工智能协作面临风险",
+  "EBRD SEES AI INVESTMENT BOOM BOOSTING SOME EASTERN EUROPEAN ECONOMIES": "欧洲复兴开发银行认为人工智能投资热潮将提振一些东欧经济体",
+  "U.S. Aerospace, Semiconductor Firms Hit by Rare Earth Shortages Ahead of Trump-Xi Summit": "特习峰会前夕，美国航空航天、半导体公司遭遇稀土短缺",
+  "A-SHARE COMPUTE CHIP STOCKS SURGED, CAMBRICON RISING NEARLY 10% AS MARKET RUMOR SAID TENCENT HAS PLACED ORDER TO CAMBRICON FOR 30,000 AI CHIPS": "A股计算芯片股大涨 市场传腾讯向寒武纪订购3万颗AI芯片 寒武纪涨近10%",
+  "I don't know how you get here from \"predict the next word.\"": "我不知道你是如何从“预测下一个单词”走到这里的。",
+  "Typing is obsolete. Try this out! It’s incredibly convenient.": "打字已经过时了。试试这个！这非常方便。",
+  "Self-improving software won't produce Skynet": "自我改进的软件不会产生天网",
+  "DeepSeek withholds latest AI model from Nvidia, AMD": "DeepSeek 扣留了 Nvidia、AMD 的最新 AI 模型",
+  "Anthropic and the Department of War": "人类与战争部"
 }
