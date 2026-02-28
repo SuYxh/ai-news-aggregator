@@ -1,7 +1,7 @@
 import type { RawItem } from '../types.js';
 import { BaseFetcher } from './base.js';
 import { fetchText, postJson, fetchJson } from '../utils/http.js';
-import { parseDate, parseUnixTimestamp } from '../utils/date.js';
+import { parseDate } from '../utils/date.js';
 import { firstNonEmpty } from '../utils/text.js';
 import { joinUrl } from '../utils/url.js';
 import * as cheerio from 'cheerio';
@@ -78,10 +78,26 @@ function extractSourceIds(js: string): string[] {
 }
 
 interface NewsNowItem {
+  id?: string;
   title?: string;
   url?: string;
   pubDate?: string;
   extra?: { date?: unknown };
+}
+
+const JUEJIN_SNOWFLAKE_EPOCH = -42416499549n;
+
+function parseJuejinId(id: string | undefined, now: Date): Date | null {
+  if (!id || !/^\d{18,20}$/.test(id)) return null;
+  try {
+    const timestamp = (BigInt(id) >> 22n) + JUEJIN_SNOWFLAKE_EPOCH;
+    const date = new Date(Number(timestamp));
+    if (date.getTime() > now.getTime() + 24 * 60 * 60 * 1000) return null;
+    if (date.getTime() < now.getTime() - 30 * 24 * 60 * 60 * 1000) return null;
+    return date;
+  } catch {
+    return null;
+  }
 }
 
 interface NewsNowBlock {
@@ -152,7 +168,6 @@ export class NewsNowFetcher extends BaseFetcher {
       const sid = String(block.id || 'unknown');
       const sourceTitle = firstNonEmpty(block.title, block.name, block.desc, sid);
       const sourceLabel = sourceTitle !== sid ? `${sourceTitle} (${sid})` : sid;
-      const updated = parseUnixTimestamp(block.updatedTime) || now;
 
       for (const it of block.items || []) {
         const title = (it.title || '').trim();
@@ -163,8 +178,8 @@ export class NewsNowFetcher extends BaseFetcher {
         if (!publishedAt && it.extra?.date) {
           publishedAt = parseDate(it.extra.date, now);
         }
-        if (!publishedAt) {
-          publishedAt = updated;
+        if (!publishedAt && sid === 'juejin' && it.id) {
+          publishedAt = parseJuejinId(it.id, now);
         }
 
         items.push(
