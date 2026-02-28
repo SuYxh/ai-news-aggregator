@@ -13,9 +13,11 @@ interface NewsListProps {
   onLoadMore: () => void
   visitedLinks: Record<string, VisitedLinkInfo>
   onVisit: (url: string, title?: string) => void
+  isFavorite?: (url: string) => boolean
+  onToggleFavorite?: (url: string, title: string) => void
 }
 
-export function NewsList({ items, loading, error, hasMore, onLoadMore, visitedLinks, onVisit }: NewsListProps) {
+export function NewsList({ items, loading, error, hasMore, onLoadMore, visitedLinks, onVisit, isFavorite, onToggleFavorite }: NewsListProps) {
   const isVisited = (url: string) => url in visitedLinks
   const visitedCount = Object.keys(visitedLinks).length
 
@@ -51,7 +53,9 @@ export function NewsList({ items, loading, error, hasMore, onLoadMore, visitedLi
           item={item} 
           index={index}
           isVisited={isVisited(item.url)}
+          isFavorite={isFavorite?.(item.url)}
           onVisit={onVisit}
+          onToggleFavorite={onToggleFavorite}
         />
       ))}
       

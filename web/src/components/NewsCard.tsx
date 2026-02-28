@@ -1,4 +1,4 @@
-import { ExternalLink, Clock, BadgeCheck } from 'lucide-react'
+import { ExternalLink, Clock, BadgeCheck, Star } from 'lucide-react'
 import type { NewsItem } from '../types'
 import { SourceBadge } from './SourceBadge'
 import { formatDateTime } from '../utils/formatDate'
@@ -7,14 +7,22 @@ interface NewsCardProps {
   item: NewsItem
   index: number
   isVisited?: boolean
+  isFavorite?: boolean
   onVisit?: (url: string, title?: string) => void
+  onToggleFavorite?: (url: string, title: string) => void
 }
 
-export function NewsCard({ item, index, isVisited = false, onVisit }: NewsCardProps) {
+export function NewsCard({ item, index, isVisited = false, isFavorite = false, onVisit, onToggleFavorite }: NewsCardProps) {
   const displayTitle = item.title_zh || item.title_en || item.title_bilingual || item.title
 
   const handleClick = () => {
     onVisit?.(item.url, displayTitle)
+  }
+
+  const handleToggleFavorite = (e: React.MouseEvent) => {
+    e.preventDefault()
+    e.stopPropagation()
+    onToggleFavorite?.(item.url, displayTitle)
   }
 
   return (
@@ -67,8 +75,19 @@ export function NewsCard({ item, index, isVisited = false, onVisit }: NewsCardPr
           </div>
         </div>
         
-        <div className="flex-shrink-0 opacity-0 group-hover:opacity-100 transition-opacity">
-          <ExternalLink className="w-5 h-5 text-slate-400" />
+        <div className="flex flex-col items-center gap-2 flex-shrink-0">
+          <button
+            onClick={handleToggleFavorite}
+            className={`p-1.5 rounded-lg transition-all ${
+              isFavorite
+                ? 'text-amber-500 bg-amber-50 dark:bg-amber-900/20'
+                : 'text-slate-400 opacity-0 group-hover:opacity-100 hover:text-amber-500 hover:bg-amber-50 dark:hover:bg-amber-900/20'
+            }`}
+            title={isFavorite ? '取消收藏' : '收藏'}
+          >
+            <Star className={`w-4 h-4 ${isFavorite ? 'fill-current' : ''}`} />
+          </button>
+          <ExternalLink className="w-5 h-5 text-slate-400 opacity-0 group-hover:opacity-100 transition-opacity" />
         </div>
       </div>
     </a>

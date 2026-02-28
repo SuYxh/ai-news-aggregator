@@ -5,15 +5,19 @@ import { FilterBar } from './components/FilterBar'
 import { NewsList } from './components/NewsList'
 import { SourceModal } from './components/SourceModal'
 import { ReadingHistoryModal } from './components/ReadingHistoryModal'
+import { FavoritesModal } from './components/FavoritesModal'
 import { useTheme } from './hooks/useTheme'
 import { useNewsData } from './hooks/useNewsData'
 import { useVisitedLinks } from './hooks/useVisitedLinks'
+import { useFavorites } from './hooks/useFavorites'
 
 function App() {
   const { theme, toggleTheme } = useTheme()
   const [showSourceModal, setShowSourceModal] = useState(false)
   const [showHistoryModal, setShowHistoryModal] = useState(false)
+  const [showFavoritesModal, setShowFavoritesModal] = useState(false)
   const { visitedLinks, markAsVisited, clearAll } = useVisitedLinks()
+  const { favorites, toggleFavorite, removeFavorite, clearAll: clearAllFavorites, isFavorite } = useFavorites()
 
   const {
     data,
@@ -46,6 +50,7 @@ function App() {
         windowHours={data?.window_hours}
         onShowSources={() => setShowSourceModal(true)}
         onShowHistory={() => setShowHistoryModal(true)}
+        onShowFavorites={() => setShowFavoritesModal(true)}
         timeRange={timeRange}
         onTimeRangeChange={setTimeRange}
       />
@@ -78,6 +83,8 @@ function App() {
           onLoadMore={loadMore}
           visitedLinks={visitedLinks}
           onVisit={markAsVisited}
+          isFavorite={isFavorite}
+          onToggleFavorite={toggleFavorite}
         />
       </main>
       
@@ -102,6 +109,14 @@ function App() {
         onClose={() => setShowHistoryModal(false)}
         visitedLinks={visitedLinks}
         onClearAll={clearAll}
+      />
+
+      <FavoritesModal
+        isOpen={showFavoritesModal}
+        onClose={() => setShowFavoritesModal(false)}
+        favorites={favorites}
+        onRemove={removeFavorite}
+        onClearAll={clearAllFavorites}
       />
     </div>
   )

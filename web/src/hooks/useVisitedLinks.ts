@@ -8,10 +8,6 @@ export interface VisitedLinkInfo {
   title: string
 }
 
-interface VisitedLinksState {
-  links: Record<string, VisitedLinkInfo>
-}
-
 function getStoredLinks(): Record<string, VisitedLinkInfo> {
   try {
     const stored = localStorage.getItem(STORAGE_KEY)

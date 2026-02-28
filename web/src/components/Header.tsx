@@ -1,4 +1,4 @@
-import { Sun, Moon, Bot, Clock, Info, Github, History } from 'lucide-react'
+import { Sun, Moon, Bot, Clock, Info, Github, History, Star } from 'lucide-react'
 import { formatDateTime } from '../utils/formatDate'
 import type { TimeRange } from '../hooks/useNewsData'
 
@@ -11,6 +11,7 @@ interface HeaderProps {
   windowHours?: number
   onShowSources?: () => void
   onShowHistory?: () => void
+  onShowFavorites?: () => void
   timeRange: TimeRange
   onTimeRangeChange: (range: TimeRange) => void
 }
@@ -22,6 +23,7 @@ export function Header({
   windowHours, 
   onShowSources,
   onShowHistory,
+  onShowFavorites,
   timeRange,
   onTimeRangeChange 
 }: HeaderProps) {
@@ -89,6 +91,13 @@ export function Header({
                 )}
               </div>
             )}
+            <button
+              onClick={onShowFavorites}
+              className="btn btn-ghost p-1.5 sm:p-2 rounded-lg"
+              title="我的收藏"
+            >
+              <Star className="w-4 h-4 sm:w-5 sm:h-5" />
+            </button>
             <button
               onClick={onShowHistory}
               className="btn btn-ghost p-1.5 sm:p-2 rounded-lg"
