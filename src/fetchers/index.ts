@@ -10,6 +10,7 @@ export { AiBaseFetcher } from './aibase.js';
 export { AiHotFetcher } from './aihot.js';
 export { NewsNowFetcher } from './newsnow.js';
 export { YouTubeFetcher } from './youtube.js';
+export { XinzhiyuanFetcher } from './xinzhiyuan.js';
 export { fetchOpmlRss } from './opml-rss.js';
 export { fetchWaytoagiRecent7d } from './waytoagi.js';
 
@@ -25,6 +26,7 @@ import { AiBaseFetcher } from './aibase.js';
 import { AiHotFetcher } from './aihot.js';
 import { NewsNowFetcher } from './newsnow.js';
 import { YouTubeFetcher } from './youtube.js';
+import { XinzhiyuanFetcher } from './xinzhiyuan.js';
 
 export function createAllFetchers(): Fetcher[] {
   return [
@@ -39,5 +41,6 @@ export function createAllFetchers(): Fetcher[] {
     new AiHotFetcher(),
     new NewsNowFetcher(),
     new YouTubeFetcher(),
+    new XinzhiyuanFetcher(),
   ];
 }

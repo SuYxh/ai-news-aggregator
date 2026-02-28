@@ -11,6 +11,7 @@ export const SITE_COLORS: Record<string, string> = {
   aibase: 'bg-teal-100 text-teal-800 dark:bg-teal-900/30 dark:text-teal-300',
   bestblogs: 'bg-rose-100 text-rose-800 dark:bg-rose-900/30 dark:text-rose-300',
   youtube: 'bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-300',
+  xinzhiyuan: 'bg-violet-100 text-violet-800 dark:bg-violet-900/30 dark:text-violet-300',
 }
 
 export const DEFAULT_BADGE_COLOR = 'bg-slate-100 text-slate-800 dark:bg-slate-700 dark:text-slate-300'
