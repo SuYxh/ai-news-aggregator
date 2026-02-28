@@ -1,4 +1,4 @@
-import { Sun, Moon, Bot, Clock, Info, Github } from 'lucide-react'
+import { Sun, Moon, Bot, Clock, Info, Github, History } from 'lucide-react'
 import { formatDateTime } from '../utils/formatDate'
 import type { TimeRange } from '../hooks/useNewsData'
 
@@ -10,6 +10,7 @@ interface HeaderProps {
   generatedAt?: string | null
   windowHours?: number
   onShowSources?: () => void
+  onShowHistory?: () => void
   timeRange: TimeRange
   onTimeRangeChange: (range: TimeRange) => void
 }
@@ -20,6 +21,7 @@ export function Header({
   generatedAt, 
   windowHours, 
   onShowSources,
+  onShowHistory,
   timeRange,
   onTimeRangeChange 
 }: HeaderProps) {
@@ -87,6 +89,13 @@ export function Header({
                 )}
               </div>
             )}
+            <button
+              onClick={onShowHistory}
+              className="btn btn-ghost p-1.5 sm:p-2 rounded-lg"
+              title="阅读历史"
+            >
+              <History className="w-4 h-4 sm:w-5 sm:h-5" />
+            </button>
             <a
               href="https://github.com/SuYxh/ai-news-aggregator"
               target="_blank"

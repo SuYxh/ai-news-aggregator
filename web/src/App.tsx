@@ -4,12 +4,16 @@ import { StatsCards } from './components/StatsCards'
 import { FilterBar } from './components/FilterBar'
 import { NewsList } from './components/NewsList'
 import { SourceModal } from './components/SourceModal'
+import { ReadingHistoryModal } from './components/ReadingHistoryModal'
 import { useTheme } from './hooks/useTheme'
 import { useNewsData } from './hooks/useNewsData'
+import { useVisitedLinks } from './hooks/useVisitedLinks'
 
 function App() {
   const { theme, toggleTheme } = useTheme()
   const [showSourceModal, setShowSourceModal] = useState(false)
+  const [showHistoryModal, setShowHistoryModal] = useState(false)
+  const { visitedLinks, markAsVisited, clearAll } = useVisitedLinks()
 
   const {
     data,
@@ -41,6 +45,7 @@ function App() {
         generatedAt={data?.generated_at}
         windowHours={data?.window_hours}
         onShowSources={() => setShowSourceModal(true)}
+        onShowHistory={() => setShowHistoryModal(true)}
         timeRange={timeRange}
         onTimeRangeChange={setTimeRange}
       />
@@ -71,6 +76,8 @@ function App() {
           error={error}
           hasMore={hasMore}
           onLoadMore={loadMore}
+          visitedLinks={visitedLinks}
+          onVisit={markAsVisited}
         />
       </main>
       
@@ -88,6 +95,13 @@ function App() {
         siteStats={siteStats}
         sourceCount={data?.source_count || 0}
         windowHours={data?.window_hours || 24}
+      />
+
+      <ReadingHistoryModal
+        isOpen={showHistoryModal}
+        onClose={() => setShowHistoryModal(false)}
+        visitedLinks={visitedLinks}
+        onClearAll={clearAll}
       />
     </div>
   )

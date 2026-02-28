@@ -3,16 +3,31 @@ import { useState, useEffect, useCallback } from 'react'
 const STORAGE_KEY = 'ai-news-visited-links'
 const MAX_LINKS = 1000
 
-interface VisitedLinksState {
-  links: Record<string, number>
+export interface VisitedLinkInfo {
+  timestamp: number
+  title: string
 }
 
-function getStoredLinks(): Record<string, number> {
+interface VisitedLinksState {
+  links: Record<string, VisitedLinkInfo>
+}
+
+function getStoredLinks(): Record<string, VisitedLinkInfo> {
   try {
     const stored = localStorage.getItem(STORAGE_KEY)
     if (stored) {
-      const parsed: VisitedLinksState = JSON.parse(stored)
-      return parsed.links || {}
+      const parsed = JSON.parse(stored)
+      if (parsed.links) {
+        const firstValue = Object.values(parsed.links)[0]
+        if (typeof firstValue === 'number') {
+          const migrated: Record<string, VisitedLinkInfo> = {}
+          for (const [url, timestamp] of Object.entries(parsed.links)) {
+            migrated[url] = { timestamp: timestamp as number, title: '' }
+          }
+          return migrated
+        }
+        return parsed.links
+      }
     }
   } catch {
     console.warn('Failed to parse visited links from localStorage')
@@ -20,11 +35,11 @@ function getStoredLinks(): Record<string, number> {
   return {}
 }
 
-function saveLinks(links: Record<string, number>) {
+function saveLinks(links: Record<string, VisitedLinkInfo>) {
   try {
     const entries = Object.entries(links)
     if (entries.length > MAX_LINKS) {
-      const sorted = entries.sort((a, b) => a[1] - b[1])
+      const sorted = entries.sort((a, b) => a[1].timestamp - b[1].timestamp)
       const trimmed = sorted.slice(entries.length - MAX_LINKS)
       links = Object.fromEntries(trimmed)
     }
@@ -35,16 +50,16 @@ function saveLinks(links: Record<string, number>) {
 }
 
 export function useVisitedLinks() {
-  const [visitedLinks, setVisitedLinks] = useState<Record<string, number>>(() => getStoredLinks())
+  const [visitedLinks, setVisitedLinks] = useState<Record<string, VisitedLinkInfo>>(() => getStoredLinks())
 
   useEffect(() => {
     saveLinks(visitedLinks)
   }, [visitedLinks])
 
-  const markAsVisited = useCallback((url: string) => {
+  const markAsVisited = useCallback((url: string, title?: string) => {
     setVisitedLinks(prev => ({
       ...prev,
-      [url]: Date.now()
+      [url]: { timestamp: Date.now(), title: title || '' }
     }))
   }, [])
 

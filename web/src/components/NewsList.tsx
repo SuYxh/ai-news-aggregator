@@ -1,9 +1,9 @@
 import type { NewsItem } from '../types'
+import type { VisitedLinkInfo } from '../hooks/useVisitedLinks'
 import { NewsCard } from './NewsCard'
 import { LoadingState } from './LoadingState'
 import { EmptyState } from './EmptyState'
 import { ChevronDown } from 'lucide-react'
-import { useVisitedLinks } from '../hooks/useVisitedLinks'
 
 interface NewsListProps {
   items: NewsItem[]
@@ -11,10 +11,13 @@ interface NewsListProps {
   error: string | null
   hasMore: boolean
   onLoadMore: () => void
+  visitedLinks: Record<string, VisitedLinkInfo>
+  onVisit: (url: string, title?: string) => void
 }
 
-export function NewsList({ items, loading, error, hasMore, onLoadMore }: NewsListProps) {
-  const { isVisited, markAsVisited, visitedCount } = useVisitedLinks()
+export function NewsList({ items, loading, error, hasMore, onLoadMore, visitedLinks, onVisit }: NewsListProps) {
+  const isVisited = (url: string) => url in visitedLinks
+  const visitedCount = Object.keys(visitedLinks).length
 
   if (loading && items.length === 0) {
     return <LoadingState />
@@ -48,7 +51,7 @@ export function NewsList({ items, loading, error, hasMore, onLoadMore }: NewsLis
           item={item} 
           index={index}
           isVisited={isVisited(item.url)}
-          onVisit={markAsVisited}
+          onVisit={onVisit}
         />
       ))}
       

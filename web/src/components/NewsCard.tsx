@@ -7,14 +7,14 @@ interface NewsCardProps {
   item: NewsItem
   index: number
   isVisited?: boolean
-  onVisit?: (url: string) => void
+  onVisit?: (url: string, title?: string) => void
 }
 
 export function NewsCard({ item, index, isVisited = false, onVisit }: NewsCardProps) {
-  const displayTitle = item.title_zh || item.title
+  const displayTitle = item.title_zh || item.title_en || item.title_bilingual || item.title
 
   const handleClick = () => {
-    onVisit?.(item.url)
+    onVisit?.(item.url, displayTitle)
   }
 
   return (
