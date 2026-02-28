@@ -61,19 +61,19 @@ export function SiteFilters({
       {selectedSite !== 'all' && sourceStats.length > 0 && (
         <div className="pt-2 border-t border-slate-200 dark:border-slate-700">
           <div className="flex items-center gap-2 mb-2">
-            <span className="text-xs text-slate-500 dark:text-slate-400">订阅源筛选:</span>
+            <span className="text-xs text-slate-500 dark:text-slate-400 flex-shrink-0">订阅源筛选:</span>
             {selectedSource !== 'all' && (
               <button
                 onClick={() => onSourceChange('all')}
-                className="text-xs text-primary-500 hover:text-primary-600 flex items-center gap-0.5"
+                className="text-xs text-primary-500 hover:text-primary-600 flex items-center gap-0.5 flex-shrink-0"
               >
                 <X className="w-3 h-3" />
                 清除
               </button>
             )}
           </div>
-          <div className="flex flex-wrap gap-1.5 max-h-32 overflow-y-auto">
-            {sourceStats.slice(0, 30).map((source) => {
+          <div className="flex flex-wrap gap-1.5 max-h-28 overflow-y-auto pr-1 scrollbar-thin">
+            {sourceStats.map((source) => {
               const isSelected = selectedSource === source.source
               
               return (
@@ -96,11 +96,6 @@ export function SiteFilters({
                 </button>
               )
             })}
-            {sourceStats.length > 30 && (
-              <span className="px-2 py-1 text-xs text-slate-400">
-                +{sourceStats.length - 30} 更多...
-              </span>
-            )}
           </div>
         </div>
       )}
