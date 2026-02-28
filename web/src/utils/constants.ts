@@ -10,6 +10,7 @@ export const SITE_COLORS: Record<string, string> = {
   aihubtoday: 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900/30 dark:text-yellow-300',
   aibase: 'bg-teal-100 text-teal-800 dark:bg-teal-900/30 dark:text-teal-300',
   bestblogs: 'bg-rose-100 text-rose-800 dark:bg-rose-900/30 dark:text-rose-300',
+  youtube: 'bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-300',
 }
 
 export const DEFAULT_BADGE_COLOR = 'bg-slate-100 text-slate-800 dark:bg-slate-700 dark:text-slate-300'

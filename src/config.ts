@@ -2,7 +2,7 @@ export const CONFIG = {
   http: {
     userAgent:
       'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36',
-    timeout: 30000,
+    timeout: 60000,
     retries: 3,
     retryDelay: 800,
     retryStatusCodes: [429, 500, 502, 503, 504],
@@ -11,7 +11,7 @@ export const CONFIG = {
   rss: {
     defaultOpmlPath: './feeds/follow.opml',
     maxConcurrency: 20,
-    feedTimeout: 30000,
+    feedTimeout: 60000,
     replacements: {
       'https://rsshub.app/infoq/recommend': 'https://www.infoq.cn/feed',
       'https://rsshub.app/huggingface/blog-zh': 'https://huggingface.co/blog/feed.xml',

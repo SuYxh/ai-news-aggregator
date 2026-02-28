@@ -9,6 +9,7 @@ export { AiHubTodayFetcher } from './aihubtoday.js';
 export { AiBaseFetcher } from './aibase.js';
 export { AiHotFetcher } from './aihot.js';
 export { NewsNowFetcher } from './newsnow.js';
+export { YouTubeFetcher } from './youtube.js';
 export { fetchOpmlRss } from './opml-rss.js';
 export { fetchWaytoagiRecent7d } from './waytoagi.js';
 
@@ -23,6 +24,7 @@ import { AiHubTodayFetcher } from './aihubtoday.js';
 import { AiBaseFetcher } from './aibase.js';
 import { AiHotFetcher } from './aihot.js';
 import { NewsNowFetcher } from './newsnow.js';
+import { YouTubeFetcher } from './youtube.js';
 
 export function createAllFetchers(): Fetcher[] {
   return [
@@ -36,5 +38,6 @@ export function createAllFetchers(): Fetcher[] {
     new AiBaseFetcher(),
     new AiHotFetcher(),
     new NewsNowFetcher(),
+    new YouTubeFetcher(),
   ];
 }
