@@ -4,6 +4,7 @@ import { joinUrl } from '../src/utils/url.js';
 import { firstNonEmpty } from '../src/utils/text.js';
 import * as cheerio from 'cheerio';
 import type { RawItem } from '../src/types.js';
+import pLimit from 'p-limit';
 
 const JUEJIN_SNOWFLAKE_EPOCH = -42416499549n;
 
@@ -18,6 +19,111 @@ function parseJuejinId(id: string | undefined, now: Date): Date | null {
   } catch {
     return null;
   }
+}
+
+interface HNItem {
+  time?: number;
+}
+
+interface GitHubRepo {
+  pushed_at?: string;
+  updated_at?: string;
+  created_at?: string;
+}
+
+async function fetchHackerNewsTime(id: string): Promise<Date | null> {
+  try {
+    const data = await fetchJson<HNItem>(
+      `https://hacker-news.firebaseio.com/v0/item/${id}.json`,
+      { timeout: 5000 }
+    );
+    return data?.time ? parseUnixTimestamp(data.time) : null;
+  } catch {
+    return null;
+  }
+}
+
+async function fetchGitHubTime(repoPath: string): Promise<Date | null> {
+  try {
+    const cleanPath = repoPath.replace(/^\//, '');
+    const data = await fetchJson<GitHubRepo>(
+      `https://api.github.com/repos/${cleanPath}`,
+      { timeout: 5000 }
+    );
+    const timeStr = data?.pushed_at || data?.updated_at || data?.created_at;
+    return timeStr ? new Date(timeStr) : null;
+  } catch {
+    return null;
+  }
+}
+
+type TimeMap = Map<string, Date | null>;
+
+interface SspaiRssTimeMap {
+  [postId: string]: Date;
+}
+
+async function fetchSspaiRssTimes(): Promise<SspaiRssTimeMap> {
+  const timeMap: SspaiRssTimeMap = {};
+  try {
+    const rss = await fetchText('https://sspai.com/feed', { timeout: 10000 });
+    const itemMatches = rss.matchAll(/<item>[\s\S]*?<\/item>/g);
+    for (const match of itemMatches) {
+      const item = match[0];
+      const linkMatch = item.match(/<link>https:\/\/sspai\.com\/post\/(\d+)<\/link>/);
+      const pubDateMatch = item.match(/<pubDate>([^<]+)<\/pubDate>/);
+      if (linkMatch && pubDateMatch) {
+        const postId = linkMatch[1];
+        const date = new Date(pubDateMatch[1]);
+        if (!isNaN(date.getTime())) {
+          timeMap[postId] = date;
+        }
+      }
+    }
+  } catch {
+  }
+  return timeMap;
+}
+
+async function enrichTimesFromAPIs(
+  items: Array<{ sid: string; id?: string; url: string }>
+): Promise<{ timeMap: TimeMap; sspaiTimes: SspaiRssTimeMap }> {
+  const timeMap: TimeMap = new Map();
+  const limit = pLimit(10);
+  const tasks: Promise<void>[] = [];
+
+  const hasSspai = items.some(i => i.sid === 'sspai');
+  let sspaiTimes: SspaiRssTimeMap = {};
+  if (hasSspai) {
+    tasks.push(
+      (async () => {
+        sspaiTimes = await fetchSspaiRssTimes();
+      })()
+    );
+  }
+
+  for (const item of items) {
+    const key = `${item.sid}:${item.id || item.url}`;
+
+    if (item.sid === 'hackernews' && item.id && /^\d+$/.test(item.id)) {
+      tasks.push(
+        limit(async () => {
+          const time = await fetchHackerNewsTime(item.id!);
+          timeMap.set(key, time);
+        })
+      );
+    } else if (item.sid === 'github' && item.id) {
+      tasks.push(
+        limit(async () => {
+          const time = await fetchGitHubTime(item.id!);
+          timeMap.set(key, time);
+        })
+      );
+    }
+  }
+
+  await Promise.all(tasks);
+  return { timeMap, sspaiTimes };
 }
 
 interface NewsNowItem {
@@ -256,13 +362,42 @@ async function testNewsNow() {
   console.log('- hackernews/producthunt/github/sspai: NewsNow API 不返回时间字段 ❌');
   console.log('  (这些平台的原始 API 有时间，但 NewsNow 没有聚合该字段)');
 
-  console.log('\n====== 验证修复后的逻辑 ======\n');
+  console.log('\n====== 从原始 API 获取时间（方案A） ======\n');
+
+  const itemsToEnrich: Array<{ sid: string; id?: string; url: string }> = [];
+  for (const block of sourceBlocks) {
+    const sid = String(block.id || 'unknown');
+    for (const it of block.items || []) {
+      if (!it.title || !it.url) continue;
+      if (sid === 'hackernews' || sid === 'github' || sid === 'sspai') {
+        itemsToEnrich.push({ sid, id: it.id, url: it.url });
+      }
+    }
+  }
+
+  console.log(`需要从原始 API 获取时间的文章: ${itemsToEnrich.length} 条`);
+  console.log('  - hackernews:', itemsToEnrich.filter(i => i.sid === 'hackernews').length, '条');
+  console.log('  - github:', itemsToEnrich.filter(i => i.sid === 'github').length, '条');
+  console.log('  - sspai:', itemsToEnrich.filter(i => i.sid === 'sspai').length, '条 (通过 RSS 获取)');
+  console.log('\n正在并发请求原始 API...');
+
+  const startTime = Date.now();
+  const { timeMap, sspaiTimes } = await enrichTimesFromAPIs(itemsToEnrich);
+  const duration = Date.now() - startTime;
+  console.log(`API 请求完成，耗时: ${duration}ms`);
+
+  const successCount = [...timeMap.values()].filter(v => v !== null).length;
+  const sspaiCount = Object.keys(sspaiTimes).length;
+  console.log(`成功获取时间: hackernews/github ${successCount}条, sspai RSS ${sspaiCount}条\n`);
+
+  console.log('====== 验证修复后的逻辑 ======\n');
 
   const items: RawItem[] = [];
   for (const block of sourceBlocks) {
     const sid = String(block.id || 'unknown');
     const sourceTitle = firstNonEmpty(block.title, block.name, block.desc, sid);
     const sourceLabel = sourceTitle !== sid ? `${sourceTitle} (${sid})` : sid;
+    const updated = parseUnixTimestamp(block.updatedTime) || now;
 
     for (const it of block.items || []) {
       const title = (it.title || '').trim();
@@ -275,6 +410,17 @@ async function testNewsNow() {
       }
       if (!publishedAt && sid === 'juejin' && it.id) {
         publishedAt = parseJuejinId(it.id, now);
+      }
+      if (!publishedAt && (sid === 'hackernews' || sid === 'github')) {
+        const key = `${sid}:${it.id || url}`;
+        publishedAt = timeMap.get(key) || null;
+      }
+      if (!publishedAt && sid === 'sspai' && it.id) {
+        const postId = String(it.id);
+        publishedAt = sspaiTimes[postId] || null;
+      }
+      if (!publishedAt) {
+        publishedAt = updated;
       }
 
       items.push({

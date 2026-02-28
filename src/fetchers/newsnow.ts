@@ -1,10 +1,11 @@
 import type { RawItem } from '../types.js';
 import { BaseFetcher } from './base.js';
 import { fetchText, postJson, fetchJson } from '../utils/http.js';
-import { parseDate } from '../utils/date.js';
+import { parseDate, parseUnixTimestamp } from '../utils/date.js';
 import { firstNonEmpty } from '../utils/text.js';
 import { joinUrl } from '../utils/url.js';
 import * as cheerio from 'cheerio';
+import pLimit from 'p-limit';
 
 function extractSourceIds(js: string): string[] {
   const marker = '{v2ex:vL';
@@ -100,6 +101,113 @@ function parseJuejinId(id: string | undefined, now: Date): Date | null {
   }
 }
 
+interface HNItem {
+  time?: number;
+}
+
+interface GitHubRepo {
+  pushed_at?: string;
+  updated_at?: string;
+  created_at?: string;
+}
+
+async function fetchHackerNewsTime(id: string): Promise<Date | null> {
+  try {
+    const data = await fetchJson<HNItem>(
+      `https://hacker-news.firebaseio.com/v0/item/${id}.json`,
+      { timeout: 5000 }
+    );
+    return data?.time ? parseUnixTimestamp(data.time) : null;
+  } catch {
+    return null;
+  }
+}
+
+async function fetchGitHubTime(repoPath: string): Promise<Date | null> {
+  try {
+    const cleanPath = repoPath.replace(/^\//, '');
+    const data = await fetchJson<GitHubRepo>(
+      `https://api.github.com/repos/${cleanPath}`,
+      { timeout: 5000 }
+    );
+    const timeStr = data?.pushed_at || data?.updated_at || data?.created_at;
+    return timeStr ? new Date(timeStr) : null;
+  } catch {
+    return null;
+  }
+}
+
+interface SspaiRssTimeMap {
+  [postId: string]: Date;
+}
+
+async function fetchSspaiRssTimes(): Promise<SspaiRssTimeMap> {
+  const timeMap: SspaiRssTimeMap = {};
+  try {
+    const rss = await fetchText('https://sspai.com/feed', { timeout: 10000 });
+    const itemMatches = rss.matchAll(/<item>[\s\S]*?<\/item>/g);
+    for (const match of itemMatches) {
+      const item = match[0];
+      const linkMatch = item.match(/<link>https:\/\/sspai\.com\/post\/(\d+)<\/link>/);
+      const pubDateMatch = item.match(/<pubDate>([^<]+)<\/pubDate>/);
+      if (linkMatch && pubDateMatch) {
+        const postId = linkMatch[1];
+        const date = new Date(pubDateMatch[1]);
+        if (!isNaN(date.getTime())) {
+          timeMap[postId] = date;
+        }
+      }
+    }
+  } catch {
+  }
+  return timeMap;
+}
+
+type TimeMap = Map<string, Date | null>;
+
+async function enrichTimesFromAPIs(
+  items: Array<{ sid: string; id?: string; url: string }>,
+  now: Date
+): Promise<{ timeMap: TimeMap; sspaiTimes: SspaiRssTimeMap }> {
+  const timeMap: TimeMap = new Map();
+  const limit = pLimit(10);
+
+  const tasks: Promise<void>[] = [];
+
+  const hasSspai = items.some(i => i.sid === 'sspai');
+  let sspaiTimes: SspaiRssTimeMap = {};
+  if (hasSspai) {
+    tasks.push(
+      (async () => {
+        sspaiTimes = await fetchSspaiRssTimes();
+      })()
+    );
+  }
+
+  for (const item of items) {
+    const key = `${item.sid}:${item.id || item.url}`;
+
+    if (item.sid === 'hackernews' && item.id && /^\d+$/.test(item.id)) {
+      tasks.push(
+        limit(async () => {
+          const time = await fetchHackerNewsTime(item.id!);
+          timeMap.set(key, time);
+        })
+      );
+    } else if (item.sid === 'github' && item.id) {
+      tasks.push(
+        limit(async () => {
+          const time = await fetchGitHubTime(item.id!);
+          timeMap.set(key, time);
+        })
+      );
+    }
+  }
+
+  await Promise.all(tasks);
+  return { timeMap, sspaiTimes };
+}
+
 interface NewsNowBlock {
   id?: string;
   title?: string;
@@ -162,12 +270,26 @@ export class NewsNowFetcher extends BaseFetcher {
       }
     }
 
+    const itemsToEnrich: Array<{ sid: string; id?: string; url: string }> = [];
+    for (const block of sourceBlocks) {
+      const sid = String(block.id || 'unknown');
+      for (const it of block.items || []) {
+        if (!it.title || !it.url) continue;
+        if (sid === 'hackernews' || sid === 'github' || sid === 'sspai') {
+          itemsToEnrich.push({ sid, id: it.id, url: it.url });
+        }
+      }
+    }
+
+    const { timeMap, sspaiTimes } = await enrichTimesFromAPIs(itemsToEnrich, now);
+
     const items: RawItem[] = [];
 
     for (const block of sourceBlocks) {
       const sid = String(block.id || 'unknown');
       const sourceTitle = firstNonEmpty(block.title, block.name, block.desc, sid);
       const sourceLabel = sourceTitle !== sid ? `${sourceTitle} (${sid})` : sid;
+      const updated = parseUnixTimestamp(block.updatedTime) || now;
 
       for (const it of block.items || []) {
         const title = (it.title || '').trim();
@@ -180,6 +302,17 @@ export class NewsNowFetcher extends BaseFetcher {
         }
         if (!publishedAt && sid === 'juejin' && it.id) {
           publishedAt = parseJuejinId(it.id, now);
+        }
+        if (!publishedAt && (sid === 'hackernews' || sid === 'github')) {
+          const key = `${sid}:${it.id || url}`;
+          publishedAt = timeMap.get(key) || null;
+        }
+        if (!publishedAt && sid === 'sspai' && it.id) {
+          const postId = String(it.id);
+          publishedAt = sspaiTimes[postId] || null;
+        }
+        if (!publishedAt) {
+          publishedAt = updated;
         }
 
         items.push(
