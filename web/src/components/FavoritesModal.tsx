@@ -1,6 +1,7 @@
 import { useState } from 'react'
-import { X, Star, Trash2, ExternalLink, AlertTriangle } from 'lucide-react'
+import { X, Star, Trash2, ExternalLink, AlertTriangle, Download } from 'lucide-react'
 import type { FavoriteInfo } from '../hooks/useFavorites'
+import { exportToJson } from '../utils/exportData'
 
 interface FavoritesModalProps {
   isOpen: boolean
@@ -119,13 +120,22 @@ export function FavoritesModal({
             </div>
             <div className="flex items-center gap-2">
               {sortedFavorites.length > 0 && (
-                <button
-                  onClick={handleClearAll}
-                  className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-lg transition-colors"
-                >
-                  <Trash2 className="w-3.5 h-3.5" />
-                  清空
-                </button>
+                <>
+                  <button
+                    onClick={() => exportToJson(favorites, 'favorites')}
+                    className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium text-primary-600 dark:text-primary-400 hover:bg-primary-50 dark:hover:bg-primary-900/20 rounded-lg transition-colors"
+                  >
+                    <Download className="w-3.5 h-3.5" />
+                    导出
+                  </button>
+                  <button
+                    onClick={handleClearAll}
+                    className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-lg transition-colors"
+                  >
+                    <Trash2 className="w-3.5 h-3.5" />
+                    清空
+                  </button>
+                </>
               )}
               <button 
                 onClick={onClose}
