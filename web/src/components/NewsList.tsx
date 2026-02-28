@@ -3,6 +3,7 @@ import { NewsCard } from './NewsCard'
 import { LoadingState } from './LoadingState'
 import { EmptyState } from './EmptyState'
 import { ChevronDown } from 'lucide-react'
+import { useVisitedLinks } from '../hooks/useVisitedLinks'
 
 interface NewsListProps {
   items: NewsItem[]
@@ -13,6 +14,8 @@ interface NewsListProps {
 }
 
 export function NewsList({ items, loading, error, hasMore, onLoadMore }: NewsListProps) {
+  const { isVisited, markAsVisited, visitedCount } = useVisitedLinks()
+
   if (loading && items.length === 0) {
     return <LoadingState />
   }
@@ -30,10 +33,23 @@ export function NewsList({ items, loading, error, hasMore, onLoadMore }: NewsLis
     return <EmptyState />
   }
 
+  const visitedInList = items.filter(item => isVisited(item.url)).length
+
   return (
     <div className="space-y-3">
+      {visitedCount > 0 && (
+        <div className="flex items-center justify-between text-xs text-slate-500 dark:text-slate-400 px-1">
+          <span>当前列表已读 {visitedInList}/{items.length} 条</span>
+        </div>
+      )}
       {items.map((item, index) => (
-        <NewsCard key={item.id} item={item} index={index} />
+        <NewsCard 
+          key={item.id} 
+          item={item} 
+          index={index}
+          isVisited={isVisited(item.url)}
+          onVisit={markAsVisited}
+        />
       ))}
       
       {hasMore && (
