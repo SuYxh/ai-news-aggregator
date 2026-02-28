@@ -1,4 +1,4 @@
-import { Sun, Moon, Bot, Clock, Info, Github, History, Star } from 'lucide-react'
+import { Sun, Moon, Bot, Clock, Info, Github, History, Star, Loader2 } from 'lucide-react'
 import { formatDateTime } from '../utils/formatDate'
 import type { TimeRange } from '../hooks/useNewsData'
 
@@ -14,6 +14,7 @@ interface HeaderProps {
   onShowFavorites?: () => void
   timeRange: TimeRange
   onTimeRangeChange: (range: TimeRange) => void
+  isSwitching?: boolean
 }
 
 export function Header({ 
@@ -25,7 +26,8 @@ export function Header({
   onShowHistory,
   onShowFavorites,
   timeRange,
-  onTimeRangeChange 
+  onTimeRangeChange,
+  isSwitching = false
 }: HeaderProps) {
   return (
     <header className="sticky top-0 z-50 bg-white/80 dark:bg-slate-900/80 backdrop-blur-lg border-b border-slate-200 dark:border-slate-700">
@@ -55,22 +57,30 @@ export function Header({
                 <div className="flex items-center bg-slate-100 dark:bg-slate-800 rounded-full p-0.5">
                   <button
                     onClick={() => onTimeRangeChange('24h')}
-                    className={`px-2 sm:px-2.5 py-0.5 text-[10px] sm:text-xs font-medium rounded-full transition-all ${
+                    disabled={isSwitching}
+                    className={`px-2 sm:px-2.5 py-0.5 text-[10px] sm:text-xs font-medium rounded-full transition-all flex items-center gap-1 ${
                       timeRange === '24h'
                         ? 'bg-gradient-to-r from-primary-500 to-primary-600 text-white shadow-sm'
                         : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
-                    }`}
+                    } ${isSwitching ? 'opacity-70 cursor-not-allowed' : ''}`}
                   >
+                    {isSwitching && timeRange === '24h' && (
+                      <Loader2 className="w-3 h-3 animate-spin" />
+                    )}
                     24h
                   </button>
                   <button
                     onClick={() => onTimeRangeChange('7d')}
-                    className={`px-2 sm:px-2.5 py-0.5 text-[10px] sm:text-xs font-medium rounded-full transition-all ${
+                    disabled={isSwitching}
+                    className={`px-2 sm:px-2.5 py-0.5 text-[10px] sm:text-xs font-medium rounded-full transition-all flex items-center gap-1 ${
                       timeRange === '7d'
                         ? 'bg-gradient-to-r from-primary-500 to-primary-600 text-white shadow-sm'
                         : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
-                    }`}
+                    } ${isSwitching ? 'opacity-70 cursor-not-allowed' : ''}`}
                   >
+                    {isSwitching && timeRange === '7d' && (
+                      <Loader2 className="w-3 h-3 animate-spin" />
+                    )}
                     7天
                   </button>
                 </div>

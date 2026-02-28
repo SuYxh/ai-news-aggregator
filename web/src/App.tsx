@@ -6,6 +6,7 @@ import { NewsList } from './components/NewsList'
 import { SourceModal } from './components/SourceModal'
 import { ReadingHistoryModal } from './components/ReadingHistoryModal'
 import { FavoritesModal } from './components/FavoritesModal'
+import { SwitchingOverlay } from './components/SwitchingOverlay'
 import { useTheme } from './hooks/useTheme'
 import { useNewsData } from './hooks/useNewsData'
 import { useVisitedLinks } from './hooks/useVisitedLinks'
@@ -37,6 +38,7 @@ function App() {
     refresh,
     timeRange,
     setTimeRange,
+    isSwitching,
   } = useNewsData()
 
   return (
@@ -53,7 +55,10 @@ function App() {
         onShowFavorites={() => setShowFavoritesModal(true)}
         timeRange={timeRange}
         onTimeRangeChange={setTimeRange}
+        isSwitching={isSwitching}
       />
+      
+      {isSwitching && <SwitchingOverlay timeRange={timeRange} />}
       
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-6">
         <StatsCards

@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo, useCallback } from 'react'
+import { useState, useEffect, useMemo, useCallback, useRef } from 'react'
 import type { NewsData, NewsItem, SiteStat } from '../types'
 
 export interface SourceStat {
@@ -27,6 +27,7 @@ interface UseNewsDataReturn {
   refresh: () => void
   timeRange: TimeRange
   setTimeRange: (range: TimeRange) => void
+  isSwitching: boolean
 }
 
 const PAGE_SIZE = 50
@@ -40,29 +41,78 @@ export function useNewsData(): UseNewsDataReturn {
   const [selectedSource, setSelectedSource] = useState('all')
   const [displayCount, setDisplayCount] = useState(PAGE_SIZE)
   const [timeRange, setTimeRange] = useState<TimeRange>('24h')
+  const [isSwitching, setIsSwitching] = useState(false)
+  
+  const preloadedDataRef = useRef<{ [key in TimeRange]?: NewsData }>({})
+  const isInitialLoadRef = useRef(true)
+  const abortControllerRef = useRef<AbortController | null>(null)
 
-  const fetchData = useCallback(async (range: TimeRange) => {
-    setLoading(true)
-    setError(null)
+  const fetchData = useCallback(async (range: TimeRange, isPreload = false) => {
+    if (preloadedDataRef.current[range] && !isPreload) {
+      setData(preloadedDataRef.current[range]!)
+      setLoading(false)
+      setIsSwitching(false)
+      return
+    }
+
+    if (!isPreload) {
+      if (abortControllerRef.current) {
+        abortControllerRef.current.abort()
+      }
+      abortControllerRef.current = new AbortController()
+      
+      if (isInitialLoadRef.current) {
+        setLoading(true)
+      } else {
+        setIsSwitching(true)
+      }
+      setError(null)
+    }
+
     try {
       const basePath = import.meta.env.BASE_URL || '/'
       const fileName = range === '24h' ? 'latest-24h.json' : 'latest-7d.json'
-      const response = await fetch(`${basePath}data/${fileName}`)
+      const signal = isPreload ? undefined : abortControllerRef.current?.signal
+      
+      const response = await fetch(`${basePath}data/${fileName}`, { signal })
       if (!response.ok) {
         throw new Error('数据加载失败')
       }
       const json = await response.json()
-      setData(json)
+      
+      preloadedDataRef.current[range] = json
+      
+      if (!isPreload) {
+        setData(json)
+        isInitialLoadRef.current = false
+      }
     } catch (err) {
-      setError(err instanceof Error ? err.message : '未知错误')
+      if (err instanceof Error && err.name === 'AbortError') {
+        return
+      }
+      if (!isPreload) {
+        setError(err instanceof Error ? err.message : '未知错误')
+      }
     } finally {
-      setLoading(false)
+      if (!isPreload) {
+        setLoading(false)
+        setIsSwitching(false)
+      }
     }
   }, [])
 
   useEffect(() => {
     fetchData(timeRange)
+    return () => {
+      abortControllerRef.current?.abort()
+    }
   }, [timeRange, fetchData])
+
+  useEffect(() => {
+    if (!isInitialLoadRef.current && !preloadedDataRef.current['7d']) {
+      fetchData('7d', true)
+    }
+  }, [data, fetchData])
 
   const handleTimeRangeChange = useCallback((range: TimeRange) => {
     setTimeRange(range)
@@ -174,6 +224,7 @@ export function useNewsData(): UseNewsDataReturn {
     displayCount,
     refresh,
     timeRange,
-    setTimeRange: handleTimeRangeChange
+    setTimeRange: handleTimeRangeChange,
+    isSwitching
   }
 }
