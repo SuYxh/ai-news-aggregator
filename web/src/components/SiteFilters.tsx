@@ -2,6 +2,7 @@ import { X } from 'lucide-react'
 import type { SiteStat } from '../types'
 import type { SourceStat } from '../hooks/useNewsData'
 import { SITE_COLORS, DEFAULT_BADGE_COLOR } from '../utils/constants'
+import { Analytics } from '../utils/analytics'
 
 interface SiteFiltersProps {
   siteStats: SiteStat[]
@@ -26,7 +27,10 @@ export function SiteFilters({
     <div className="space-y-3">
       <div className="flex flex-wrap gap-2">
         <button
-          onClick={() => onSiteChange('all')}
+          onClick={() => {
+            Analytics.trackSiteFilter('all', '全部')
+            onSiteChange('all')
+          }}
           className={`px-3 py-1.5 rounded-full text-sm font-medium transition-all duration-200 ${
             selectedSite === 'all'
               ? 'bg-primary-500 text-white shadow-md shadow-primary-500/25'
@@ -42,7 +46,10 @@ export function SiteFilters({
           return (
             <button
               key={site.site_id}
-              onClick={() => onSiteChange(site.site_id)}
+              onClick={() => {
+                Analytics.trackSiteFilter(site.site_id, site.site_name)
+                onSiteChange(site.site_id)
+              }}
               className={`px-3 py-1.5 rounded-full text-sm font-medium transition-all duration-200 flex items-center gap-1.5 ${
                 isSelected
                   ? 'bg-primary-500 text-white shadow-md shadow-primary-500/25'
@@ -79,7 +86,10 @@ export function SiteFilters({
               return (
                 <button
                   key={source.source}
-                  onClick={() => onSourceChange(source.source)}
+                  onClick={() => {
+                    Analytics.trackSourceFilter(source.source)
+                    onSourceChange(source.source)
+                  }}
                   className={`px-2 py-1 rounded-md text-xs transition-all duration-200 ${
                     isSelected
                       ? 'bg-primary-500 text-white'

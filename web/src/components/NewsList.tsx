@@ -4,6 +4,7 @@ import { NewsCard } from './NewsCard'
 import { LoadingState } from './LoadingState'
 import { EmptyState } from './EmptyState'
 import { ChevronDown } from 'lucide-react'
+import { Analytics } from '../utils/analytics'
 
 interface NewsListProps {
   items: NewsItem[]
@@ -62,7 +63,10 @@ export function NewsList({ items, loading, error, hasMore, onLoadMore, visitedLi
       {hasMore && (
         <div className="flex justify-center pt-4">
           <button
-            onClick={onLoadMore}
+            onClick={() => {
+              Analytics.trackLoadMore()
+              onLoadMore()
+            }}
             className="btn btn-ghost flex items-center gap-2 text-primary-600 dark:text-primary-400 hover:bg-primary-50 dark:hover:bg-primary-900/20"
           >
             <span>加载更多</span>

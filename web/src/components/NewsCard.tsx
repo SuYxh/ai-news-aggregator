@@ -2,6 +2,7 @@ import { ExternalLink, Clock, BadgeCheck, Star } from 'lucide-react'
 import type { NewsItem } from '../types'
 import { SourceBadge } from './SourceBadge'
 import { formatDateTime } from '../utils/formatDate'
+import { Analytics } from '../utils/analytics'
 
 interface NewsCardProps {
   item: NewsItem
@@ -16,12 +17,14 @@ export function NewsCard({ item, index, isVisited = false, isFavorite = false, o
   const displayTitle = item.title_zh || item.title_en || item.title_bilingual || item.title
 
   const handleClick = () => {
+    Analytics.trackNewsClick(displayTitle, item.source, item.site_id)
     onVisit?.(item.url, displayTitle)
   }
 
   const handleToggleFavorite = (e: React.MouseEvent) => {
     e.preventDefault()
     e.stopPropagation()
+    Analytics.trackNewsFavorite(displayTitle, isFavorite ? 'remove' : 'add')
     onToggleFavorite?.(item.url, displayTitle)
   }
 

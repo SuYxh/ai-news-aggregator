@@ -1,6 +1,7 @@
 import { Sun, Moon, Bot, Clock, Info, Github, History, Star, Loader2 } from 'lucide-react'
 import { formatDateTime } from '../utils/formatDate'
 import type { TimeRange } from '../hooks/useNewsData'
+import { Analytics } from '../utils/analytics'
 
 interface HeaderProps {
   theme: 'light' | 'dark'
@@ -36,18 +37,29 @@ export function Header({
           <div className="flex items-center gap-2 sm:gap-3 min-w-0 flex-1">
             <div 
               className="w-8 h-8 sm:w-10 sm:h-10 rounded-xl bg-gradient-to-br from-primary-500 to-primary-600 flex items-center justify-center shadow-lg shadow-primary-500/25 flex-shrink-0 cursor-pointer"
-              onClick={onShowSources}
+              onClick={() => {
+                Analytics.trackLogo()
+                onShowSources?.()
+              }}
             >
               <Bot className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
             </div>
             <div className="min-w-0 flex-1">
               <div className="flex items-center gap-1.5 sm:gap-2 flex-wrap">
                 <div 
-                  onClick={onShowSources}
+                  onClick={() => {
+                    Analytics.trackLogo()
+                    onShowSources?.()
+                  }}
                   className="group flex items-center gap-1.5 cursor-pointer hover:opacity-80 transition-opacity"
                   role="button"
                   tabIndex={0}
-                  onKeyDown={(e) => e.key === 'Enter' && onShowSources?.()}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter') {
+                      Analytics.trackLogo()
+                      onShowSources?.()
+                    }
+                  }}
                 >
                   <h1 className="text-base sm:text-xl font-bold text-slate-900 dark:text-white whitespace-nowrap">
                     AI 资讯聚合
@@ -56,7 +68,10 @@ export function Header({
                 </div>
                 <div className="flex items-center bg-slate-100 dark:bg-slate-800 rounded-full p-0.5">
                   <button
-                    onClick={() => onTimeRangeChange('24h')}
+                    onClick={() => {
+                      Analytics.trackTimeRange('24h')
+                      onTimeRangeChange('24h')
+                    }}
                     disabled={isSwitching}
                     className={`px-2 sm:px-2.5 py-0.5 text-[10px] sm:text-xs font-medium rounded-full transition-all flex items-center gap-1 ${
                       timeRange === '24h'
@@ -70,7 +85,10 @@ export function Header({
                     24h
                   </button>
                   <button
-                    onClick={() => onTimeRangeChange('7d')}
+                    onClick={() => {
+                      Analytics.trackTimeRange('7d')
+                      onTimeRangeChange('7d')
+                    }}
                     disabled={isSwitching}
                     className={`px-2 sm:px-2.5 py-0.5 text-[10px] sm:text-xs font-medium rounded-full transition-all flex items-center gap-1 ${
                       timeRange === '7d'
@@ -102,14 +120,20 @@ export function Header({
               </div>
             )}
             <button
-              onClick={onShowFavorites}
+              onClick={() => {
+                Analytics.trackFavorites()
+                onShowFavorites?.()
+              }}
               className="btn btn-ghost p-1.5 sm:p-2 rounded-lg"
               title="我的收藏"
             >
               <Star className="w-4 h-4 sm:w-5 sm:h-5" />
             </button>
             <button
-              onClick={onShowHistory}
+              onClick={() => {
+                Analytics.trackHistory()
+                onShowHistory?.()
+              }}
               className="btn btn-ghost p-1.5 sm:p-2 rounded-lg"
               title="阅读历史"
             >
@@ -121,11 +145,15 @@ export function Header({
               rel="noopener noreferrer"
               className="btn btn-ghost p-1.5 sm:p-2 rounded-lg"
               title="GitHub"
+              onClick={() => Analytics.trackGithub()}
             >
               <Github className="w-4 h-4 sm:w-5 sm:h-5" />
             </a>
             <button
-              onClick={toggleTheme}
+              onClick={() => {
+                Analytics.trackThemeToggle(theme === 'light' ? 'dark' : 'light')
+                toggleTheme()
+              }}
               className="btn btn-ghost p-1.5 sm:p-2 rounded-lg"
               title={theme === 'light' ? '切换深色模式' : '切换浅色模式'}
             >

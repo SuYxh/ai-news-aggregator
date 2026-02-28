@@ -1,5 +1,6 @@
 import { FileText, Database, Sparkles } from 'lucide-react'
 import type { SiteStat } from '../types'
+import { Analytics } from '../utils/analytics'
 
 interface StatsCardsProps {
   totalItems: number
@@ -29,7 +30,10 @@ export function StatsCards({ totalItems, sourceCount, windowHours, siteStats, on
         <div className="hidden sm:block w-px h-4 bg-slate-200 dark:bg-slate-700" />
 
         <button 
-          onClick={onShowSources}
+          onClick={() => {
+            Analytics.trackSourcesDetail()
+            onShowSources()
+          }}
           className="flex items-center gap-1.5 sm:gap-2 hover:opacity-70 transition-opacity"
         >
           <div className="p-1 sm:p-1.5 rounded-lg bg-emerald-50 dark:bg-emerald-900/20 flex-shrink-0">
