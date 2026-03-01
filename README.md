@@ -9,7 +9,7 @@
 [![Node.js](https://img.shields.io/badge/node-%3E%3D18.0.0-brightgreen?logo=node.js)](https://nodejs.org/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.0+-blue?logo=typescript)](https://www.typescriptlang.org/)
 
-[🌐 在线预览](https://suyxh.github.io/ai-news-aggregator/) · [📊 数据 API](#输出文件) · [🚀 快速开始](#快速开始)
+[🌐 在线预览](https://suyxh.github.io/ai-news-aggregator/) · [📝 更新日志](./CHANGELOG.md) · [🔧 技术方案](./TECH_SPEC.md)
 
 </div>
 
@@ -22,7 +22,7 @@
 <td width="50%">
 
 ### 📡 多源聚合
-从 **11 个专业平台** + **70+ 个精选 RSS 订阅** 实时抓取资讯，覆盖全球 AI 生态
+从 **14 个专业平台** + **70+ 个精选 RSS 订阅** + **52 个微信公众号** 实时抓取资讯，覆盖全球 AI 生态
 
 ### 🧠 智能筛选
 基于关键词匹配的 AI 相关性过滤，从海量信息中精准提取 AI/科技内容
@@ -48,6 +48,43 @@ GitHub Actions 每 2 小时自动抓取，数据永远保持最新
 
 ---
 
+## 🖼️ 界面预览
+
+<div align="center">
+
+### 📰 首页资讯流
+
+<img src="./assets/home.jpeg" alt="首页" width="800" />
+
+<br />
+
+<table>
+<tr>
+<td width="50%" align="center">
+
+### ⭐ 收藏功能
+
+<img src="./assets/favorite.jpeg" alt="收藏" width="380" />
+
+</td>
+<td width="50%" align="center">
+
+### 📖 阅读历史
+
+<img src="./assets/read-history.jpeg" alt="阅读历史" width="380" />
+
+</td>
+</tr>
+</table>
+
+### 📡 RSS 订阅源
+
+<img src="./assets/rss-1.jpeg" alt="RSS订阅源" width="800" />
+
+</div>
+
+---
+
 ## 🌐 在线预览
 
 访问 [https://suyxh.github.io/ai-news-aggregator/](https://suyxh.github.io/ai-news-aggregator/) 查看实时 AI 资讯聚合。
@@ -57,13 +94,17 @@ GitHub Actions 每 2 小时自动抓取，数据永远保持最新
 - 🔍 按平台、订阅源筛选
 - 🔎 标题关键词搜索
 - 🌙 浅色/深色主题切换
-- 📊 数据源详情弹窗
+- ⭐ 文章收藏（本地持久化）
+- � 阅读历史追踪
+- 📤 数据导出（JSON 格式）
+- ⏱️ 24h/7d 时间范围切换
+- 🚀 智能预加载，切换秒开
 
 ---
 
 ## 📊 数据源矩阵
 
-### 聚合平台（11 个）
+### 聚合平台（14 个）
 
 | 平台 | 说明 | 特点 |
 |:-----|:-----|:-----|
@@ -78,6 +119,114 @@ GitHub Actions 每 2 小时自动抓取，数据永远保持最新
 | **AIbase** | AI 产品库 | 最新 AI 工具和应用 |
 | **BestBlogs** | 博客周刊 | 优质技术博客文章 |
 | **WaytoAGI** | 知识库 | 飞书知识库 AI 更新 |
+| **YouTube** | 视频平台 | AI 博主最新视频 |
+| **新智元** | AI 媒体 | 国内领先 AI 资讯 |
+| **微信公众号** | 公众号聚合 | 52 个优质订阅源 |
+
+### 微信公众号订阅（52 个）
+
+精选国内最优质的微信公众号，涵盖 AI、科技、财经、技术等领域：
+
+<details>
+<summary><b>🤖 AI/人工智能（11 个）</b></summary>
+
+| 公众号 | 说明 |
+|:-------|:-----|
+| **机器之心** | AI 领域头部媒体，深度报道 |
+| **量子位** | AI 科技媒体，前沿动态 |
+| **新智元** | AI 产业媒体，技术与应用 |
+| **DeepTech深科技** | 深度科技报道 |
+| **PaperWeekly** | AI 论文解读，学术前沿 |
+| **计算机视觉life** | CV 方向技术内容 |
+| **AI前线** | InfoQ 旗下 AI 技术媒体 |
+| **夕小瑶科技说** | AI/NLP 技术博主 |
+| **海外独角兽** | 海外 AI 创业与投资 |
+| **甲子光年** | 科技产业深度报道 |
+| **集智俱乐部** | 复杂系统与 AI 交叉研究 |
+
+</details>
+
+<details>
+<summary><b>📰 科技/互联网媒体（10 个）</b></summary>
+
+| 公众号 | 说明 |
+|:-------|:-----|
+| **晚点LatePost** | 深度商业报道，科技巨头内幕 |
+| **36氪** | 头部科技商业媒体 |
+| **36氪Pro** | 36氪深度版 |
+| **虎嗅App** | 科技商业评论 |
+| **极客公园** | 科技创新报道 |
+| **少数派** | 数字生活，效率工具 |
+| **APPSO** | 应用推荐与数码评测 |
+| **爱范儿** | 消费科技媒体 |
+| **差评** | 科技评论与深度报道 |
+| **钛媒体** | 科技商业媒体 |
+
+</details>
+
+<details>
+<summary><b>💻 技术/开发者（6 个）</b></summary>
+
+| 公众号 | 说明 |
+|:-------|:-----|
+| **InfoQ** | 软件开发技术媒体 |
+| **阿里云开发者** | 阿里技术分享 |
+| **腾讯技术工程** | 腾讯技术分享 |
+| **前端之巅** | 前端技术 |
+| **架构师之路** | 架构设计 |
+| **GitHubDaily** | 开源项目推荐 |
+
+</details>
+
+<details>
+<summary><b>💰 财经/投资（8 个）</b></summary>
+
+| 公众号 | 说明 |
+|:-------|:-----|
+| **华尔街见闻** | 全球财经资讯 |
+| **财经杂志** | 财经深度报道 |
+| **第一财经YiMagazine** | 商业财经 |
+| **经纬创投** | 创投视角 |
+| **红杉汇** | 红杉资本 |
+| **42章经** | 创投与创业 |
+| **远川投资评论** | 投资分析 |
+| **泽平宏观展望** | 宏观经济分析 |
+
+</details>
+
+<details>
+<summary><b>✍️ 高质量个人博主（12 个）</b></summary>
+
+| 公众号 | 说明 |
+|:-------|:-----|
+| **caoz的梦呓** | 互联网老兵，行业洞察 |
+| **L先生说** | 思维方法论 |
+| **槽边往事** | 和菜头，生活随笔 |
+| **孟岩** | 投资与认知 |
+| **刘润** | 商业洞察 |
+| **辉哥奇谭** | 职场与成长 |
+| **warfalcon** | 阅读与学习方法 |
+| **玉树芝兰** | 知识管理 |
+| **九边** | 历史与时事评论 |
+| **也谈钱** | 理财与投资 |
+| **keso怎么看** | 互联网评论 |
+| **阑夕** | 科技评论 |
+
+</details>
+
+<details>
+<summary><b>🎯 产品/商业（6 个）</b></summary>
+
+| 公众号 | 说明 |
+|:-------|:-----|
+| **人人都是产品经理** | 产品方法论 |
+| **互联网怪盗团** | 互联网行业分析 |
+| **乱翻书** | 商业与产品 |
+| **刘言飞语** | 产品思考 |
+| **产品犬舍** | 产品设计 |
+| **FounderPark** | 创业者访谈 |
+
+</details>
 
 ### 精选 RSS 订阅（70+ 个）
 
@@ -257,6 +406,7 @@ cd web && pnpm build
 | 文件 | 说明 |
 |:-----|:-----|
 | `latest-24h.json` | 最近 24 小时 AI 资讯 |
+| `latest-7d.json` | 最近 7 天 AI 资讯 |
 | `archive.json` | 历史归档（45 天） |
 | `source-status.json` | 数据源抓取状态 |
 | `opml-feeds.json` | OPML 订阅源列表 |
@@ -331,6 +481,9 @@ ai-news-aggregator/
 │   ├── config.ts             # 配置
 │   ├── types.ts              # 类型定义
 │   ├── fetchers/             # 各平台抓取器
+│   │   ├── wechat-rss.ts     # 微信公众号抓取
+│   │   ├── youtube.ts        # YouTube 抓取
+│   │   └── ...               # 其他平台
 │   ├── filters/              # 过滤器（AI 相关性、去重）
 │   ├── translate/            # 翻译模块
 │   └── utils/                # 工具函数
@@ -343,6 +496,7 @@ ai-news-aggregator/
 │   └── vite.config.ts
 ├── feeds/                    # RSS 订阅配置
 │   └── follow.opml
+├── assets/                   # 截图资源
 ├── data/                     # 输出数据
 └── .github/workflows/        # GitHub Actions
 ```
@@ -371,6 +525,12 @@ ai-news-aggregator/
 | **Vite** | 构建工具 |
 | **Tailwind CSS** | 样式框架 |
 | **Lucide React** | 图标库 |
+
+---
+
+## 📝 更新日志
+
+查看 [CHANGELOG.md](./CHANGELOG.md) 了解版本更新详情。
 
 ---
 
