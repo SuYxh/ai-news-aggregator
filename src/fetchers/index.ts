@@ -11,6 +11,7 @@ export { AiHotFetcher } from './aihot.js';
 export { NewsNowFetcher } from './newsnow.js';
 export { YouTubeFetcher } from './youtube.js';
 export { XinzhiyuanFetcher } from './xinzhiyuan.js';
+export { WechatRssFetcher } from './wechat-rss.js';
 export { fetchOpmlRss } from './opml-rss.js';
 export { fetchWaytoagiRecent7d } from './waytoagi.js';
 
@@ -27,6 +28,7 @@ import { AiHotFetcher } from './aihot.js';
 import { NewsNowFetcher } from './newsnow.js';
 import { YouTubeFetcher } from './youtube.js';
 import { XinzhiyuanFetcher } from './xinzhiyuan.js';
+import { WechatRssFetcher } from './wechat-rss.js';
 
 export function createAllFetchers(): Fetcher[] {
   return [
@@ -42,5 +44,6 @@ export function createAllFetchers(): Fetcher[] {
     new NewsNowFetcher(),
     new YouTubeFetcher(),
     new XinzhiyuanFetcher(),
+    new WechatRssFetcher(),
   ];
 }
