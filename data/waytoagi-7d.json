@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-09-22T23:54:45.081Z",
+  "generated_at": "2026-09-23T08:54:59.660Z",
   "timezone": "Asia/Shanghai",
   "root_url": "https://waytoagi.feishu.cn/wiki/QPe5w5g7UisbEkkow8XcDmOpn8e?fromScene=spaceOverview",
   "history_url": null,
@@ -11,5 +11,5 @@
   "updates_7d": [],
   "warning": "WaytoAGI 近7日更新抓取失败",
   "has_error": true,
-  "error": "HTTP 429"
+  "error": "Cannot locate Feishu clientVars marker"
 }
